@@ -1,4 +1,4 @@
-# Guidelines — Man-Agent
+# Guidelines — TeamFit
 
 > Documento vivo. Aggiungere qui ogni nuova convenzione decisa durante il build.
 
@@ -38,7 +38,7 @@
 - Swagger configurato con security header `X-User-Id` editabile.
 
 ### Test
-- `xUnit`. Project di test: `ManAgent.Domain.Tests` (almeno). Opzionale `ManAgent.Application.Tests`.
+- `xUnit`. Project di test: `TeamFit.Domain.Tests` (almeno). Opzionale `TeamFit.Application.Tests`.
 - `FluentAssertions` per leggibilità.
 - Test naming: `Metodo_QuandoCondizione_AlloraRisultato`.
 
@@ -59,7 +59,7 @@
 ### Stili
 - **CSS Modules** (`Componente.module.css`). Import: `import styles from './X.module.css'`.
 - **Mai** `style={{...}}` inline (eccezione tollerata: dimensioni veramente dinamiche calcolate a runtime).
-- Variabili colori in `styles/global.css` come CSS custom properties (`--man-color-warning`, ecc.).
+- Variabili colori in `styles/global.css` come CSS custom properties (`--tf-color-warning`, ecc.).
 - Tema Ant Design centralizzato in `styles/theme.ts`.
 
 ### State

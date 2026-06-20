@@ -1,10 +1,10 @@
-# Project Context — Man-Agent
+# Project Context — TeamFit
 
 > Documento vivo. **Aggiornare dopo ogni feature o cambio user-visible.**
 
 ## 1. Scope
 
-**Man-Agent** è una piattaforma SaaS rivendibile alle aziende per la **gestione e
+**TeamFit** è una piattaforma SaaS rivendibile alle aziende per la **gestione e
 ottimizzazione dei progetti** erogati ai loro clienti. Il focus è **l'efficienza
 economica**: ogni progetto deve restare in **write-up** (margine positivo) ed
 evitare il **write-off** (margine negativo o budget sforato).
@@ -18,7 +18,7 @@ Aziende di servizi (es. consulenza tech) con:
 
 ### Problema risolto
 Project Manager e Manager scoprono troppo tardi quando un progetto sta bruciando
-budget. Man-Agent dà visibilità in tempo reale su consumo, forecast e margine, e
+budget. TeamFit dà visibilità in tempo reale su consumo, forecast e margine, e
 alza alert prima che il danno sia fatto.
 
 ## 2. Glossario
@@ -102,7 +102,7 @@ Recapito: **solo in-app** (badge in header + pagina `/alerts`).
 12. **Persistenza**: EF Core + Azure SQL (LocalDB / SQL Express in dev), migrations + seed.
 13. **UI library**: Ant Design + CSS Modules. **No Tailwind**, **no CSS inline**.
 14. **Recharts** per i grafici dashboard.
-15. **IaC**: Terraform per Static Web App + App Service + Azure SQL + Storage Account. Nelle 5h solo `terraform validate` + `plan`, **no apply**.
+15. **IaC**: Terraform per POC low-cost networked con Static Web App Free, App Service B1 Linux, Azure SQL Free/Basic, Storage LRS, VNet Integration, Private Endpoint e Private DNS; per la topologia Enterprise aggiunge Application Gateway WAF_v2, VM Agent, Cosmos DB, Key Vault, Private Endpoint, Private DNS Zone, Log Analytics e Application Insights. Nelle 5h solo `terraform validate` + `plan`, **no apply**.
 16. **Seed**: 3 clienti, 8 progetti (mix stati, almeno 2 con alert), 15 dipendenti, 5 utenti (uno per ruolo + un secondo PM).
 17. **Lingua UI**: italiano.
 
@@ -129,3 +129,6 @@ Non implementare senza richiesta esplicita:
 | 2026-06-20 | PM può modificare solo `OreConsuntivate` sui suoi progetti | Necessario per generare alert realistici durante la demo. |
 | 2026-06-20 | `PresalesId` nullable su `Project` | Serve a filtrare la vista Presales senza creare entità separata. |
 | 2026-06-20 | Soglia "no attività" fissa a 14 giorni | Configurabilità rimandata post-MVP. |
+| 2026-06-20 | Prodotto consolidato come TeamFit | Allineamento naming repository/prodotto. |
+| 2026-06-20 | Stima costi infra aggiornata con margine networking | Private Endpoint, Private DNS, Public IP e traffico incidono sul costo mensile. |
+| 2026-06-20 | POC impostato su SKU minimi compatibili con networking privato | B1 è il tier low-cost compatibile con VNet Integration; i data service restano privati via Private Endpoint e Private DNS. |

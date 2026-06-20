@@ -1,10 +1,10 @@
-# Architecture — Man-Agent
+# Architecture — TeamFit
 
 > Documento vivo. Aggiornare quando cambiano bounded context, layer o topologia di deploy.
 
 ## 1. Vista d'insieme
 
-Man-Agent è una SPA React che consuma una API .NET 10 (minimal API) basata su
+TeamFit è una SPA React che consuma una API .NET 10 (minimal API) basata su
 DDD a 4 layer, persistenza Azure SQL via EF Core. Single-tenant. Auth mock.
 
 ```mermaid
@@ -21,10 +21,10 @@ In dev locale: Vite (`:5173`) → proxy → Kestrel (`:5000`) → LocalDB / SQL 
 
 ```mermaid
 flowchart TD
-  Api[ManAgent.Api<br/>Minimal API + Swagger + DI]
-  Infra[ManAgent.Infrastructure<br/>EF Core + DbContext + Repositories + Seed]
-  App[ManAgent.Application<br/>Use cases + DTO + Validators + AlertEvaluator + IClock]
-  Domain[ManAgent.Domain<br/>Aggregate + Entity + VO + Domain Exceptions]
+  Api[TeamFit.Api<br/>Minimal API + Swagger + DI]
+  Infra[TeamFit.Infrastructure<br/>EF Core + DbContext + Repositories + Seed]
+  App[TeamFit.Application<br/>Use cases + DTO + Validators + AlertEvaluator + IClock]
+  Domain[TeamFit.Domain<br/>Aggregate + Entity + VO + Domain Exceptions]
 
   Api --> Infra
   Infra --> App
@@ -99,8 +99,8 @@ Due topologie documentate in **[docs/infra-design.md](infra-design.md)**:
 
 | Topologia | Quando usarla |
 |---|---|
-| **POC** | Validazione rapida, costi ~€115–140/mese. App Service semi-privato (public inbound + VNet Integration outbound). Frontend su Static Web App. |
-| **Enterprise** | Produzione hardened, costi ~€575–620/mese. Tutto privato dietro Application Gateway WAF_v2. Nessun backend esposto direttamente. |
+| **POC** | Validazione rapida, costi ~€45–75/mese. App Service pubblico in ingresso, data service privati via VNet Integration + Private Endpoint. Frontend su Static Web App Free. |
+| **Enterprise** | Produzione hardened, costi ~€700–790/mese inclusi margini networking. Tutto privato dietro Application Gateway WAF_v2. Nessun backend esposto direttamente. |
 
 ### POC — schema sintetico
 
@@ -110,9 +110,9 @@ flowchart TB
     User[Browser]
   end
 
-  subgraph RG[rg-manAgent-poc]
-    SWA[Static Web App\nStandard tier]
-    Plan[App Service Plan S1 Linux]
+  subgraph RG[rg-teamfit-poc]
+    SWA[Static Web App\nFree tier]
+    Plan[App Service Plan B1 Linux]
     API[App Service .NET 10\npublic inbound]
     VNet[VNet 10.0.0.0/16]
     SQL[(Azure SQL\nprivate endpoint)]
@@ -141,7 +141,7 @@ flowchart TB
     User[Browser]
   end
 
-  subgraph RG[rg-manAgent-enterprise]
+  subgraph RG[rg-teamfit-enterprise]
     AGW[App Gateway WAF_v2\npublic IP]
     FE[Frontend App Service P1v3\nnginx + React build\nprivate endpoint]
     BE[Backend App Service P1v3\n.NET 10 API\nprivate endpoint]

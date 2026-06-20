@@ -1,0 +1,153 @@
+<mxfile host="app.diagrams.net" modified="2026-06-20T00:00:00.000Z" agent="gpt-5.5" version="24.7.17">
+  <diagram id="teamfit-enterprise-infra" name="Enterprise Infrastructure">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="TeamFit — Enterprise Azure Infrastructure" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="330" y="20" width="740" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="user" value="Browser users" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" vertex="1" parent="1">
+          <mxGeometry x="45" y="95" width="80" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="internet" value="Internet" style="cloud;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=14" vertex="1" parent="1">
+          <mxGeometry x="160" y="110" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="public-ip" value="Public IP&lt;br&gt;Standard, static" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13" vertex="1" parent="1">
+          <mxGeometry x="340" y="110" width="150" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rg" value="Resource group: rg-teamfit-enterprise" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;dashed=1;verticalAlign=top;align=left;spacingTop=8;spacingLeft=10;fontStyle=1;fontSize=14" vertex="1" parent="1">
+          <mxGeometry x="80" y="210" width="1230" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="vnet" value="VNet 10.0.0.0/16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ff;strokeColor=#6c8ebf;verticalAlign=top;align=left;spacingTop=8;spacingLeft=10;fontStyle=1;fontSize=14" vertex="1" parent="1">
+          <mxGeometry x="110" y="245" width="900" height="540" as="geometry" />
+        </mxCell>
+
+        <mxCell id="snet-appgw" value="snet-appgw 10.0.0.0/26" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;verticalAlign=top;align=center;spacingTop=8;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="145" y="295" width="170" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="agw" value="Application Gateway WAF_v2&lt;br&gt;OWASP 3.2 prevention&lt;br&gt;HTTPS listener" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="165" y="340" width="130" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="snet-fe" value="snet-fe-vnetint 10.0.1.0/24&lt;br&gt;delegated Microsoft.Web/serverFarms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;verticalAlign=top;align=center;spacingTop=8;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="350" y="295" width="190" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="fe" value="Frontend App Service P1v3&lt;br&gt;nginx + React build&lt;br&gt;public access disabled" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="375" y="340" width="140" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="fe-pe" value="Private Endpoint&lt;br&gt;Frontend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="375" y="475" width="140" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="snet-be" value="snet-be-vnetint 10.0.2.0/24&lt;br&gt;delegated Microsoft.Web/serverFarms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;verticalAlign=top;align=center;spacingTop=8;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="575" y="295" width="190" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="be" value="Backend App Service P1v3&lt;br&gt;.NET 10 API&lt;br&gt;not exposed via WAF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="600" y="340" width="140" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="be-pe" value="Private Endpoint&lt;br&gt;Backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="600" y="475" width="140" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="snet-vm" value="snet-vm 10.0.3.0/24" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;verticalAlign=top;align=center;spacingTop=8;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="800" y="295" width="170" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="vm" value="VM Agent Standard_B2s&lt;br&gt;self-hosted CI/CD&lt;br&gt;no public inbound" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="820" y="340" width="130" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="snet-pe" value="snet-pe 10.0.4.0/24 — Private Endpoints" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;verticalAlign=top;align=center;spacingTop=8;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="145" y="560" width="825" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="sql" value="Azure SQL&lt;br&gt;private endpoint" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="175" y="610" width="110" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="cosmos" value="Cosmos DB&lt;br&gt;private endpoint" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="310" y="610" width="110" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="storage" value="Storage Account&lt;br&gt;blob private endpoint" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="445" y="610" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="kv" value="Key Vault&lt;br&gt;private endpoint + RBAC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="595" y="610" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="dns" value="Private DNS Zones&lt;br&gt;privatelink.azurewebsites.net&lt;br&gt;privatelink.database.windows.net&lt;br&gt;privatelink.documents.azure.com&lt;br&gt;privatelink.blob.core.windows.net&lt;br&gt;privatelink.vaultcore.azure.net" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="745" y="595" width="195" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="observability" value="Observability" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff5f5;strokeColor=#b85450;verticalAlign=top;align=center;spacingTop=8;fontStyle=1;fontSize=14" vertex="1" parent="1">
+          <mxGeometry x="1040" y="295" width="230" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="appi" value="Application Insights&lt;br&gt;workspace-based" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="1070" y="345" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="law" value="Log Analytics Workspace" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="1070" y="410" width="170" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="notes" value="Enterprise constraints&lt;br&gt;• Only WAF has public inbound&lt;br&gt;• Frontend and backend use private endpoints&lt;br&gt;• Backend not routed directly from Internet&lt;br&gt;• VM agent deploys through SCM private endpoints&lt;br&gt;• Data services disable public network access" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=left;spacing=10;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="1040" y="515" width="230" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e-user-internet" value="HTTPS" style="endArrow=block;html=1;rounded=0;strokeColor=#333333;fontSize=11" edge="1" parent="1" source="user" target="internet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-internet-ip" value="443" style="endArrow=block;html=1;rounded=0;strokeColor=#333333;fontSize=11" edge="1" parent="1" source="internet" target="public-ip">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ip-agw" value="HTTPS listener" style="endArrow=block;html=1;rounded=0;strokeColor=#333333;fontSize=11" edge="1" parent="1" source="public-ip" target="agw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-agw-fe" value="HTTPS 443 / private endpoint" style="endArrow=block;html=1;rounded=0;strokeColor=#333333;fontSize=11" edge="1" parent="1" source="agw" target="fe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-fe-be" value="/api/* reverse proxy via VNet" style="endArrow=block;html=1;rounded=0;strokeColor=#333333;fontSize=11" edge="1" parent="1" source="fe" target="be">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-fe-fepe" value="inbound" style="endArrow=block;html=1;rounded=0;strokeColor=#82b366;fontSize=11" edge="1" parent="1" source="fe-pe" target="fe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-be-bepe" value="inbound" style="endArrow=block;html=1;rounded=0;strokeColor=#82b366;fontSize=11" edge="1" parent="1" source="be-pe" target="be">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-be-sql" value="EF Core" style="endArrow=block;html=1;rounded=0;strokeColor=#82b366;fontSize=11" edge="1" parent="1" source="be" target="sql">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-be-cosmos" value="AI agent data" style="endArrow=block;html=1;rounded=0;strokeColor=#82b366;fontSize=11" edge="1" parent="1" source="be" target="cosmos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-be-storage" value="blobs / artifacts" style="endArrow=block;html=1;rounded=0;strokeColor=#82b366;fontSize=11" edge="1" parent="1" source="be" target="storage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-apps-kv" value="secrets via managed identity" style="endArrow=block;html=1;rounded=0;strokeColor=#d6b656;fontSize=11" edge="1" parent="1" source="be" target="kv">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-vm-fe" value="SCM private endpoint" style="endArrow=block;html=1;rounded=0;strokeColor=#d6b656;fontSize=11" edge="1" parent="1" source="vm" target="fe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-vm-be" value="SCM private endpoint" style="endArrow=block;html=1;rounded=0;strokeColor=#d6b656;fontSize=11" edge="1" parent="1" source="vm" target="be">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-fe-appi" value="telemetry" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#b85450;fontSize=11" edge="1" parent="1" source="fe" target="appi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-be-appi" value="telemetry" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#b85450;fontSize=11" edge="1" parent="1" source="be" target="appi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-appi-law" value="ingest" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#b85450;fontSize=11" edge="1" parent="1" source="appi" target="law">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-dns-pe" value="name resolution" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#9673a6;fontSize=11" edge="1" parent="1" source="dns" target="fe-pe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-dns-data" value="privatelink zones" style="endArrow=block;html=1;rounded=0;dashed=1;strokeColor=#9673a6;fontSize=11" edge="1" parent="1" source="dns" target="sql">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

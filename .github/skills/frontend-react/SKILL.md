@@ -1,9 +1,9 @@
 ---
 name: frontend-react
-description: Regole per il frontend React + TypeScript + Vite di Man-Agent. USE WHEN si lavora in frontend/, si creano o modificano pagine, componenti, hook, servizi API, store Zustand, query TanStack, stili. Triggers - React, TypeScript, TSX, Vite, frontend, pagina, componente, hook, store, axios, TanStack Query, Zustand, Ant Design, antd, CSS Modules, Recharts, dashboard, tabella, form, login, route, RoleGuard.
+description: Regole per il frontend React + TypeScript + Vite di TeamFit. USE WHEN si lavora in frontend/, si creano o modificano pagine, componenti, hook, servizi API, store Zustand, query TanStack, stili. Triggers - React, TypeScript, TSX, Vite, frontend, pagina, componente, hook, store, axios, TanStack Query, Zustand, Ant Design, antd, CSS Modules, Recharts, dashboard, tabella, form, login, route, RoleGuard.
 ---
 
-# Frontend React — Man-Agent
+# Frontend React — TeamFit
 
 Frontend SPA in React + TypeScript + Vite. Leggi sempre
 [AGENTS.md](../../../AGENTS.md) e [docs/guidelines.md](../../../docs/guidelines.md)
@@ -100,7 +100,7 @@ Mutazioni: `useMutation` + `queryClient.invalidateQueries({ queryKey: projectsQu
 
 ## Stili
 
-- `styles/global.css`: reset minimale + variabili CSS (es. `--man-color-warning`).
+- `styles/global.css`: reset minimale + variabili CSS (es. `--tf-color-warning`).
 - `styles/theme.ts`: oggetto `ThemeConfig` di Ant Design, applicato in `App.tsx` con `<ConfigProvider theme={theme}>`.
 - CSS Modules: nome classe in camelCase `.kpiCard`, import `import styles from './KpiCard.module.css'`.
 
