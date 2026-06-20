@@ -35,7 +35,7 @@ const WELCOME_MESSAGE: ChatMessage = {
   id: 'welcome',
   role: 'assistant',
   content:
-    'Ciao! Sono il tuo assistente Man-Agent, alimentato da **Azure AI Foundry**.\n\nPosso aiutarti a:\n• Monitorare il carico delle risorse\n• Proporre riallocazioni ottimali\n• Identificare rischi di progetto\n• Analizzare KPI di portfolio\n\nCosa posso fare per te?',
+    'Ciao! Sono il tuo assistente TeamFit, alimentato da **Azure AI Foundry**.\n\nPosso aiutarti a:\n• Monitorare il carico delle risorse\n• Proporre riallocazioni ottimali\n• Identificare rischi di progetto\n• Analizzare KPI di portfolio\n\nCosa posso fare per te?',
   timestamp: new Date(),
 };
 

@@ -269,7 +269,7 @@ export function AIChatbot(): JSX.Element {
           <div className={styles.panelHeaderLeft}>
             <ThunderboltFilled className={styles.foundryIcon} />
             <div>
-              <div className={styles.panelTitle}>Man-Agent AI</div>
+              <div className={styles.panelTitle}>TeamFit AI</div>
               <div className={styles.panelSubtitle}>Azure AI Foundry · GPT-4o</div>
             </div>
           </div>

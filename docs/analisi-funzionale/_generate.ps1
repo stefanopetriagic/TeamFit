@@ -1,11 +1,11 @@
 # _generate.ps1
-# Genera AF_TeamFit_ManAgent_MVP_2026-06-20.docx via Word COM (Office 16+)
+# Genera AF_TeamFit_MVP_2026-06-20.docx via Word COM (Office 16+)
 # Eseguire da qualsiasi directory con:
 #   powershell -ExecutionPolicy Bypass -File .\docs\analisi-funzionale\_generate.ps1
 
 $ErrorActionPreference = "Stop"
 $repoRoot   = "c:\Users\StefanoPetri\source\repos\Man-Agent"
-$outPath    = "$repoRoot\docs\analisi-funzionale\AF_TeamFit_ManAgent_MVP_2026-06-20.docx"
+$outPath    = "$repoRoot\docs\analisi-funzionale\AF_TeamFit_MVP_2026-06-20.docx"
 $logoPath   = "$repoRoot\docs\TeamFit-Logo.png"
 
 # ---- Colori (R + G*256 + B*65536) ----
@@ -113,7 +113,7 @@ try {
     $sel.TypeText("ANALISI FUNZIONALE  -  DOCUMENTO INTERNO"); $sel.TypeParagraph(); $sel.TypeParagraph()
 
     $sel.Font.Size = 36; $sel.Font.Bold = $true; $sel.Font.Color = $C_DARK_BLUE
-    $sel.TypeText("Man-Agent"); $sel.TypeParagraph()
+    $sel.TypeText("TeamFit"); $sel.TypeParagraph()
     $sel.Font.Size = 15; $sel.Font.Bold = $false; $sel.Font.Color = $C_GRAY
     $sel.TypeText("Piattaforma SaaS per la gestione e ottimizzazione"); $sel.TypeParagraph()
     $sel.TypeText("dei progetti aziendali"); $sel.TypeParagraph()
@@ -128,7 +128,7 @@ try {
     @(
         @("Versione",        "0.1  -  Bozza"),
         @("Data emissione",  "20 giugno 2026"),
-        @("Progetto",        "Man-Agent MVP"),
+        @("Progetto",        "TeamFit MVP"),
         @("Classificazione", "Uso interno  -  TeamFit Srl")
     ) | ForEach-Object -Begin { $r=1 } -Process {
         $cTbl.Cell($r,1).Range.Text = $_[0]; $cTbl.Cell($r,2).Range.Text = $_[1]
@@ -166,9 +166,9 @@ try {
     # 1. EXECUTIVE SUMMARY
     # ==================================================================
     H1 "1. Executive Summary"
-    Para "Man-Agent e' una piattaforma SaaS enterprise rivolta ad aziende di servizi professionali che gestiscono portafogli di progetti a budget per conto di clienti. Il problema centrale e' la ""scoperta tardiva"": Project Manager e Manager si accorgono del superamento di budget o del calo di margine quando l'intervento correttivo non e' piu' possibile."
+    Para "TeamFit e' una piattaforma SaaS enterprise rivolta ad aziende di servizi professionali che gestiscono portafogli di progetti a budget per conto di clienti. Il problema centrale e' la ""scoperta tardiva"": Project Manager e Manager si accorgono del superamento di budget o del calo di margine quando l'intervento correttivo non e' piu' possibile."
     Blank
-    Para "Man-Agent risponde con:"
+    Para "TeamFit risponde con:"
     Bullet "Dashboard KPI real-time: consumo budget (%), Write-up/Write-off (EUR), Forecast EAC, Margine %  -  per progetto e aggregati per ruolo."
     Bullet "Alerting proattivo su 6 regole di rischio predefinite (budget warning/critical, forecast over, margine basso, overrun allocazione, inattivita' 14 gg) con recapito in-app."
     Bullet "Gestione strutturata delle risorse: pianificazione ore (allocazione) e consuntivazione  -  distinte per figura professionale (A->F)."

@@ -103,7 +103,7 @@ Mutazioni: `useMutation` + `queryClient.invalidateQueries({ queryKey: projectsQu
 - Toggle via pulsante "AI Agent" nella sidebar, o tramite `useChatStore().toggleOpen()`
 - Mock response engine basato su keyword matching in `getMockResponse()`
 - Proposta riallocazione: componente `ProposalCard` con Accept/Reject inline
-- Label brand: "Man-Agent AI · Azure AI Foundry · GPT-4o"
+- Label brand: "TeamFit AI · Azure AI Foundry · GPT-4o"
 
 ## Pagine MVP
 

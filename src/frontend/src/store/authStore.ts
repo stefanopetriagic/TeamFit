@@ -15,6 +15,6 @@ export const useAuthStore = create<AuthState>()(
       setCurrentUser: (user) => set({ currentUser: user }),
       logout: () => set({ currentUser: null }),
     }),
-    { name: 'man-agent-auth' },
+    { name: 'teamfit-auth' },
   ),
 );

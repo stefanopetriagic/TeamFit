@@ -97,11 +97,11 @@ TeamFit/
 │   ├── analisi-funzionale/         ← output .docx (creata al primo uso)
 │   └── presentazioni/              ← output .pptx (creata al primo uso)
 ├── backend/
-│   ├── ManAgent.sln
-│   ├── ManAgent.Domain/               ← entity, aggregate, VO, eventi, no deps esterne
-│   ├── ManAgent.Application/          ← use case, DTO, interfacce, AlertEvaluator
-│   ├── ManAgent.Infrastructure/       ← EF Core DbContext, repository, seed
-│   └── ManAgent.Api/                  ← minimal API, middleware, Swagger
+│   ├── TeamFit.sln
+│   ├── TeamFit.Domain/               ← entity, aggregate, VO, eventi, no deps esterne
+│   ├── TeamFit.Application/          ← use case, DTO, interfacce, AlertEvaluator
+│   ├── TeamFit.Infrastructure/       ← EF Core DbContext, repository, seed
+│   └── TeamFit.Api/                  ← minimal API, middleware, Swagger
 ├── frontend/
 │   └── src/
 │       ├── pages/                     ← una pagina per route

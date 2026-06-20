@@ -14,6 +14,6 @@ export const useThemeStore = create<ThemeState>()(
       mode: 'light',
       toggle: () => set({ mode: get().mode === 'light' ? 'dark' : 'light' }),
     }),
-    { name: 'man-agent-theme' },
+    { name: 'teamfit-theme' },
   ),
 );

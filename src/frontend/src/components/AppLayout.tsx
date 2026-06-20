@@ -69,9 +69,9 @@ export function AppLayout(): JSX.Element {
     <Layout className={styles.layout}>
       <Sider width={220} className={styles.sider} theme="dark">
         <div className={styles.logo}>
-          <div className={styles.logoIcon}>M</div>
+          <div className={styles.logoIcon}>T</div>
           <div>
-            <div className={styles.logoText}>Man-Agent</div>
+            <div className={styles.logoText}>TeamFit</div>
             <div className={styles.logoSub}>Project Intelligence</div>
           </div>
         </div>

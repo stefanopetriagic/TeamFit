@@ -17,6 +17,6 @@ export const useOrgConfigStore = create<OrgConfigState>()(
       saveConfig: (config) => set({ config, isConfigured: true }),
       resetConfig: () => set({ config: null, isConfigured: false }),
     }),
-    { name: 'man-agent-org-config' },
+    { name: 'teamfit-org-config' },
   ),
 );

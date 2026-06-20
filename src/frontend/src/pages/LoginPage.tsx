@@ -46,7 +46,7 @@ export function LoginPage(): JSX.Element {
       >
         <div className={styles.header}>
           <div className={styles.logoWrap}>M</div>
-          <div className={styles.title}>Man-Agent</div>
+          <div className={styles.title}>TeamFit</div>
           <div className={styles.subtitle}>Project Intelligence Platform</div>
         </div>
 

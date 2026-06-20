@@ -8,7 +8,7 @@ import type { ColumnsType } from 'antd/es/table';
 import type { UploadFile } from 'antd/es/upload';
 import {
   PlusOutlined, DeleteOutlined, DownloadOutlined,
-  CloudSyncOutlined, CheckCircleOutlined, ThunderboltOutlined,
+  CloudSyncOutlined, CheckCircleOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useOrgConfigStore } from '../store/orgConfigStore';
@@ -67,7 +67,7 @@ function downloadCsvTemplate(): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'template_risorse_man-agent.csv';
+  a.download = 'template_risorse_teamfit.csv';
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -483,11 +483,9 @@ export function SetupWizardPage(): JSX.Element {
     <div className={styles.page}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <div className={styles.logoMark}>
-            <ThunderboltOutlined />
-          </div>
+          <div className={styles.logoMark}>T</div>
           <div>
-            <Title level={2} className={styles.title}>Configura Man-Agent</Title>
+            <Title level={2} className={styles.title}>Configura TeamFit</Title>
             <Text type="secondary">Completamento guidato in {steps.length} passaggi</Text>
           </div>
         </div>

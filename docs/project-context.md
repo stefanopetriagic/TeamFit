@@ -119,7 +119,7 @@ Recapito: **solo in-app** (badge in header + pagina `/alerts`).
 ### AI Chatbot (pannello destro)
 - Toggled dal pulsante "AI Agent" in fondo alla sidebar sinistra
 - Pannello collassabile 360px sulla destra, si apre sopra il contenuto principale
-- Label: **Man-Agent AI** | Azure AI Foundry · GPT-4o
+- Label: **TeamFit AI** | Azure AI Foundry · GPT-4o
 - Mock response engine: riconosce keyword (sovraccarico, proponi, rischio, budget, risorse, portfolio, help)
 - Propone riallocazioni come card interattive con Accept/Reject
 - Non richiede backend; tutte le risposte sono mock deterministici
