@@ -178,25 +178,25 @@ resource "azurerm_private_endpoint" "sql" {
   }
 }
 
-resource "azurerm_private_endpoint" "cosmos" {
-  name                = "pe-cosmos-${local.name_base}"
-  location            = data.azurerm_resource_group.main.location
-  resource_group_name = data.azurerm_resource_group.main.name
-  subnet_id           = azurerm_subnet.private_endpoint.id
-  tags                = local.tags
+# resource "azurerm_private_endpoint" "cosmos" {
+#   name                = "pe-cosmos-${local.name_base}"
+#   location            = data.azurerm_resource_group.main.location
+#   resource_group_name = data.azurerm_resource_group.main.name
+#   subnet_id           = azurerm_subnet.private_endpoint.id
+#   tags                = local.tags
 
-  private_service_connection {
-    name                           = "psc-cosmos-${local.name_base}"
-    private_connection_resource_id = azurerm_cosmosdb_account.main.id
-    is_manual_connection           = false
-    subresource_names              = ["Sql"]
-  }
+#   private_service_connection {
+#     name                           = "psc-cosmos-${local.name_base}"
+#     private_connection_resource_id = azurerm_cosmosdb_account.main.id
+#     is_manual_connection           = false
+#     subresource_names              = ["Sql"]
+#   }
 
-  private_dns_zone_group {
-    name                 = "pdzg-cosmos"
-    private_dns_zone_ids = [azurerm_private_dns_zone.main["cosmos"].id]
-  }
-}
+#   private_dns_zone_group {
+#     name                 = "pdzg-cosmos"
+#     private_dns_zone_ids = [azurerm_private_dns_zone.main["cosmos"].id]
+#   }
+# }
 
 resource "azurerm_private_endpoint" "storage_blob" {
   name                = "pe-blob-${local.name_base}"
