@@ -121,3 +121,9 @@ Se durante l'implementazione introduci una convenzione nuova (es. pattern di err
 handling, naming aggiuntivo, libreria nuova) → **aggiungi una sezione qui** nello
 stesso commit della feature. La regola d'oro è: chi legge questo file deve poter
 scrivere codice conforme senza chiedere a nessuno.
+
+## 9. Stime infrastrutturali
+
+- Le stime Terraform in `docs/infra-design.md` indicano sempre figura professionale usata, baseline e assunzioni.
+- Per stime enterprise usare **AGIC Figura F** se non indicato diversamente.
+- Separare sempre `validate/plan` da `apply/debug/smoke test`.

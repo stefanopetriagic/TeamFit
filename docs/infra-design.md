@@ -308,19 +308,22 @@ Il costo dominante resta Application Gateway WAF_v2.
 
 ### Tempo implementazione Terraform — Enterprise app
 
-Stima per sviluppatore mid, partendo da `infra/terraform` vuoto e limitando il
-perimetro alla topologia Enterprise applicativa descritta sopra.
+Stima per **AGIC Figura F** (sviluppatore mid), partendo da `infra/terraform`
+vuoto e limitando il perimetro alla topologia Enterprise applicativa descritta
+sopra. La stima è compressa a circa il **60%** rispetto alla prima baseline,
+assumendo riuso di moduli Terraform standard, naming già deciso e assenza di
+policy Azure bloccanti.
 
-| Attività | Stima |
-|---|---:|
-| Moduli base Terraform (RG, VNet, subnet, NSG, DNS privato) | 1.5–2 giorni |
-| Data services privati (Azure SQL, Cosmos DB, Storage, Key Vault, Private Endpoint) | 1.5–2 giorni |
-| App Service Enterprise (2 plan/app, identity, settings, private endpoint, VNet Integration) | 1.5–2 giorni |
-| Application Gateway WAF_v2 + health probe + routing HTTPS verso frontend | 1–1.5 giorni |
-| VM Agent subnet + VM + hardening baseline | 0.5–1 giorno |
-| `terraform fmt/validate/plan`, variabili, output, README operativo | 0.5 giorno |
-| **Totale validate/plan** | **6–8 giorni** |
-| Apply, debug DNS/private endpoint, smoke test rete/app | **+2–3 giorni** |
+| Attività | Baseline precedente | AGIC Figura F — stima aggiornata |
+|---|---:|---:|
+| Moduli base Terraform (RG, VNet, subnet, NSG, DNS privato) | 1.5–2 giorni | 1 giorno |
+| Data services privati (Azure SQL, Cosmos DB, Storage, Key Vault, Private Endpoint) | 1.5–2 giorni | 1 giorno |
+| App Service Enterprise (2 plan/app, identity, settings, private endpoint, VNet Integration) | 1.5–2 giorni | 1 giorno |
+| Application Gateway WAF_v2 + health probe + routing HTTPS verso frontend | 1–1.5 giorni | 0.75–1 giorno |
+| VM Agent subnet + VM + hardening baseline | 0.5–1 giorno | 0.25–0.5 giorno |
+| `terraform fmt/validate/plan`, variabili, output, README operativo | 0.5 giorno | 0.25–0.5 giorno |
+| **Totale validate/plan** | **6–8 giorni** | **4–5 giorni** |
+| Apply, debug DNS/private endpoint, smoke test rete/app | **+2–3 giorni** | **+1–2 giorni** |
 
 Fuori da questa stima: container/nginx reverse proxy o BFF, bootstrap runner
 CI/CD, certificato TLS custom, dominio DNS pubblico, policy Azure enterprise già
@@ -338,7 +341,7 @@ esistenti.
 | WAF | Nessuno | OWASP 3.2 Prevention mode |
 | CI/CD | Deployment diretto (App Service pubblico) | VM Agent in VNet |
 | Costo mensile stimato | ~€45–75 | ~€700–790 |
-| Tempo implementazione Terraform | Non stimato qui | Enterprise app: 6–8 giorni validate/plan, +2–3 giorni apply/smoke test |
+| Tempo implementazione Terraform | Non stimato qui | Enterprise app: AGIC Figura F, 4–5 giorni validate/plan, +1–2 giorni apply/smoke test |
 
 ---
 

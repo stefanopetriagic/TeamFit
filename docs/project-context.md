@@ -132,3 +132,4 @@ Non implementare senza richiesta esplicita:
 | 2026-06-20 | Prodotto consolidato come TeamFit | Allineamento naming repository/prodotto. |
 | 2026-06-20 | Stima costi infra aggiornata con margine networking | Private Endpoint, Private DNS, Public IP e traffico incidono sul costo mensile. |
 | 2026-06-20 | POC impostato su SKU minimi compatibili con networking privato | B1 è il tier low-cost compatibile con VNet Integration; i data service restano privati via Private Endpoint e Private DNS. |
+| 2026-06-20 | Stima implementazione Terraform Enterprise ridotta al 60% | La stima ora usa AGIC Figura F e assume riuso di moduli Terraform standard. |
