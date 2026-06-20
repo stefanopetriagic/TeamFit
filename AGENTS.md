@@ -64,6 +64,8 @@ VS Code Copilot trova automaticamente le skill in `.github/skills/`. Quando lavo
 
 - **`backend/`** → segui [`.github/skills/backend-ddd/SKILL.md`](.github/skills/backend-ddd/SKILL.md)
 - **`frontend/`** → segui [`.github/skills/frontend-react/SKILL.md`](.github/skills/frontend-react/SKILL.md)
+- **Analisi funzionale (.docx)** → segui [`.github/skills/functional-analysis-doc/SKILL.md`](.github/skills/functional-analysis-doc/SKILL.md)
+- **Presentazione progetto (.pptx)** → segui [`.github/skills/project-presentation-ppt/SKILL.md`](.github/skills/project-presentation-ppt/SKILL.md)
 
 Se modifichi entrambi nello stesso task, applica entrambe le skill ai rispettivi file.
 
@@ -78,12 +80,16 @@ Man-Agent/
 ├── .github/
 │   └── skills/
 │       ├── backend-ddd/SKILL.md
-│       └── frontend-react/SKILL.md
+│       ├── frontend-react/SKILL.md
+│       ├── functional-analysis-doc/SKILL.md
+│       └── project-presentation-ppt/SKILL.md
 ├── docs/
 │   ├── project-context.md
 │   ├── guidelines.md
 │   ├── architecture.md
-│   └── domain-model.md
+│   ├── domain-model.md
+│   ├── analisi-funzionale/         ← output .docx (creata al primo uso)
+│   └── presentazioni/              ← output .pptx (creata al primo uso)
 ├── backend/
 │   ├── ManAgent.sln
 │   ├── ManAgent.Domain/               ← entity, aggregate, VO, eventi, no deps esterne
