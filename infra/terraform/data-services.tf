@@ -57,7 +57,7 @@ resource "azurerm_key_vault" "main" {
 # }
 
 locals {
-  sql_connection_string = "Server=tcp:${azurerm_mssql_server.sql.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.app.name};Persist Security Info=False;User ID=${azurerm_mssql_server.sql.administrator_login};Password=${local.sql_admin_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  # sql_connection_string = "Server=tcp:${azurerm_mssql_server.sql.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.app.name};Persist Security Info=False;User ID=${azurerm_mssql_server.sql.administrator_login};Password=${local.sql_admin_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 }
 
 resource "azurerm_storage_account" "main" {
@@ -136,16 +136,16 @@ resource "azurerm_role_assignment" "kv_secrets_officer_deployer" {
   principal_id       = data.azurerm_client_config.current.object_id
 }
 
-resource "azurerm_key_vault_secret" "sql_connection" {
-  count = var.manage_key_vault_secrets ? 1 : 0
+# resource "azurerm_key_vault_secret" "sql_connection" {
+#   count = var.manage_key_vault_secrets ? 1 : 0
 
-  name         = "sql-default-connection"
-  value        = local.sql_connection_string
-  key_vault_id = azurerm_key_vault.main.id
-  tags         = local.tags
+#   name         = "sql-default-connection"
+#   value        = local.sql_connection_string
+#   key_vault_id = azurerm_key_vault.main.id
+#   tags         = local.tags
 
-  depends_on = [azurerm_role_assignment.kv_secrets_officer_deployer]
-}
+#   depends_on = [azurerm_role_assignment.kv_secrets_officer_deployer]
+# }
 
 resource "azurerm_key_vault_secret" "ai_endpoint" {
   count = var.manage_key_vault_secrets ? 1 : 0
@@ -158,25 +158,25 @@ resource "azurerm_key_vault_secret" "ai_endpoint" {
   depends_on = [azurerm_role_assignment.kv_secrets_officer_deployer]
 }
 
-resource "azurerm_private_endpoint" "sql" {
-  name                = "pe-sql-${local.name_base}"
-  location            = data.azurerm_resource_group.main.location
-  resource_group_name = data.azurerm_resource_group.main.name
-  subnet_id           = azurerm_subnet.private_endpoint.id
-  tags                = local.tags
+# resource "azurerm_private_endpoint" "sql" {
+#   name                = "pe-sql-${local.name_base}"
+#   location            = data.azurerm_resource_group.main.location
+#   resource_group_name = data.azurerm_resource_group.main.name
+#   subnet_id           = azurerm_subnet.private_endpoint.id
+#   tags                = local.tags
 
-  private_service_connection {
-    name                           = "psc-sql-${local.name_base}"
-    private_connection_resource_id = azurerm_mssql_server.sql.id
-    is_manual_connection           = false
-    subresource_names              = ["sqlServer"]
-  }
+#   private_service_connection {
+#     name                           = "psc-sql-${local.name_base}"
+#     private_connection_resource_id = azurerm_mssql_server.sql.id
+#     is_manual_connection           = false
+#     subresource_names              = ["sqlServer"]
+#   }
 
-  private_dns_zone_group {
-    name                 = "pdzg-sql"
-    private_dns_zone_ids = [azurerm_private_dns_zone.main["sql"].id]
-  }
-}
+#   private_dns_zone_group {
+#     name                 = "pdzg-sql"
+#     private_dns_zone_ids = [azurerm_private_dns_zone.main["sql"].id]
+#   }
+# }
 
 # resource "azurerm_private_endpoint" "cosmos" {
 #   name                = "pe-cosmos-${local.name_base}"
