@@ -48,7 +48,6 @@ resource "azurerm_linux_web_app" "api" {
     AzureAI__Kind                         = var.ai_services_kind
     KeyVault__Uri                         = azurerm_key_vault.main.vault_uri
     Storage__BlobEndpoint                 = azurerm_storage_account.main.primary_blob_endpoint
-    WEBSITE_DNS_SERVER                    = "168.63.129.16"
     WEBSITE_RUN_FROM_PACKAGE              = "1"
     WEBSITE_VNET_ROUTE_ALL                = "1"
     }, var.manage_key_vault_secrets ? {
