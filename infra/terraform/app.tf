@@ -1,7 +1,7 @@
 resource "azurerm_service_plan" "api" {
   name                = local.app_service_plan
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   os_type             = "Linux"
   sku_name            = var.app_service_plan_sku
   worker_count        = var.app_service_worker_count
@@ -10,8 +10,8 @@ resource "azurerm_service_plan" "api" {
 
 resource "azurerm_linux_web_app" "api" {
   name                                           = local.api_name
-  location                                       = azurerm_resource_group.main.location
-  resource_group_name                            = azurerm_resource_group.main.name
+  location                                       = data.azurerm_resource_group.main.location
+  resource_group_name                            = data.azurerm_resource_group.main.name
   service_plan_id                                = azurerm_service_plan.api.id
   ftp_publish_basic_authentication_enabled       = false
   https_only                                     = true
@@ -59,7 +59,7 @@ resource "azurerm_linux_web_app" "api" {
 resource "azurerm_static_web_app" "frontend" {
   name                = local.static_web_app_name
   location            = var.static_web_app_location
-  resource_group_name = azurerm_resource_group.main.name
+  resource_group_name = data.azurerm_resource_group.main.name
   sku_tier            = var.static_web_app_sku_tier
   sku_size            = var.static_web_app_sku_size
   tags                = local.tags

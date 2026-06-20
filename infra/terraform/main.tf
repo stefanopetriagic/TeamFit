@@ -21,8 +21,6 @@ locals {
   sql_admin_password = coalesce(var.sql_admin_password, random_password.sql_admin.result)
 }
 
-resource "azurerm_resource_group" "main" {
-  name     = local.resource_group_name
-  location = var.location
-  tags     = local.tags
+data "azurerm_resource_group" "main" {
+  name = local.resource_group_name
 }

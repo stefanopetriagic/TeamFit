@@ -24,8 +24,8 @@ data "azurerm_role_definition" "cognitive_services_openai_user" {
 
 resource "azurerm_key_vault" "main" {
   name                          = local.key_vault_name
-  location                      = azurerm_resource_group.main.location
-  resource_group_name           = azurerm_resource_group.main.name
+  location                      = data.azurerm_resource_group.main.location
+  resource_group_name           = data.azurerm_resource_group.main.name
   tenant_id                     = data.azurerm_client_config.current.tenant_id
   sku_name                      = "standard"
   rbac_authorization_enabled    = true
@@ -37,8 +37,8 @@ resource "azurerm_key_vault" "main" {
 
 resource "azurerm_mssql_server" "sql" {
   name                          = local.sql_server_name
-  location                      = azurerm_resource_group.main.location
-  resource_group_name           = azurerm_resource_group.main.name
+  location                      = data.azurerm_resource_group.main.location
+  resource_group_name           = data.azurerm_resource_group.main.name
   version                       = "12.0"
   administrator_login           = var.sql_admin_login
   administrator_login_password  = local.sql_admin_password
@@ -62,8 +62,8 @@ locals {
 
 resource "azurerm_storage_account" "main" {
   name                            = local.storage_account_name
-  location                        = azurerm_resource_group.main.location
-  resource_group_name             = azurerm_resource_group.main.name
+  location                        = data.azurerm_resource_group.main.location
+  resource_group_name             = data.azurerm_resource_group.main.name
   account_kind                    = "StorageV2"
   account_replication_type        = "LRS"
   account_tier                    = "Standard"
@@ -85,8 +85,8 @@ resource "azurerm_storage_account_network_rules" "main" {
 
 resource "azurerm_cosmosdb_account" "main" {
   name                          = local.cosmos_account_name
-  location                      = azurerm_resource_group.main.location
-  resource_group_name           = azurerm_resource_group.main.name
+  location                      = data.azurerm_resource_group.main.location
+  resource_group_name           = data.azurerm_resource_group.main.name
   offer_type                    = "Standard"
   kind                          = "GlobalDocumentDB"
   public_network_access_enabled = false
@@ -101,21 +101,21 @@ resource "azurerm_cosmosdb_account" "main" {
   }
 
   geo_location {
-    location          = azurerm_resource_group.main.location
+    location          = data.azurerm_resource_group.main.location
     failover_priority = 0
   }
 }
 
 resource "azurerm_cosmosdb_sql_database" "ai_agent" {
   name                = "ai-agent"
-  resource_group_name = azurerm_resource_group.main.name
+  resource_group_name = data.azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.main.name
 }
 
 resource "azurerm_cognitive_account" "ai" {
   name                          = local.ai_account_name
-  location                      = azurerm_resource_group.main.location
-  resource_group_name           = azurerm_resource_group.main.name
+  location                      = data.azurerm_resource_group.main.location
+  resource_group_name           = data.azurerm_resource_group.main.name
   kind                          = var.ai_services_kind
   sku_name                      = "S0"
   custom_subdomain_name         = local.ai_account_name
@@ -160,8 +160,8 @@ resource "azurerm_key_vault_secret" "ai_endpoint" {
 
 resource "azurerm_private_endpoint" "sql" {
   name                = "pe-sql-${local.name_base}"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   subnet_id           = azurerm_subnet.private_endpoint.id
   tags                = local.tags
 
@@ -180,8 +180,8 @@ resource "azurerm_private_endpoint" "sql" {
 
 resource "azurerm_private_endpoint" "cosmos" {
   name                = "pe-cosmos-${local.name_base}"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   subnet_id           = azurerm_subnet.private_endpoint.id
   tags                = local.tags
 
@@ -200,8 +200,8 @@ resource "azurerm_private_endpoint" "cosmos" {
 
 resource "azurerm_private_endpoint" "storage_blob" {
   name                = "pe-blob-${local.name_base}"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   subnet_id           = azurerm_subnet.private_endpoint.id
   tags                = local.tags
 
@@ -220,8 +220,8 @@ resource "azurerm_private_endpoint" "storage_blob" {
 
 resource "azurerm_private_endpoint" "key_vault" {
   name                = "pe-kv-${local.name_base}"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   subnet_id           = azurerm_subnet.private_endpoint.id
   tags                = local.tags
 

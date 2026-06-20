@@ -1,6 +1,6 @@
 output "resource_group_name" {
   description = "Resource group name."
-  value       = azurerm_resource_group.main.name
+  value       = data.azurerm_resource_group.main.name
 }
 
 output "api_app_name" {
