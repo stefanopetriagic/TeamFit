@@ -1,19 +1,19 @@
 ---
 name: functional-analysis-doc
-description: Genera un documento Word (.docx) di analisi funzionale per Man-Agent o per nuove feature. USE WHEN viene chiesto di creare/aggiornare un'analisi funzionale, specifica funzionale, FSD, documento di analisi, requisiti funzionali, use case document, scope document. Triggers - analisi funzionale, specifica funzionale, FSD, functional analysis, requisiti, use case, documento Word, .docx, scope document, business requirements, BRD.
+description: Genera un documento Word (.docx) di analisi funzionale per TeamFit o per nuove feature. USE WHEN viene chiesto di creare/aggiornare un'analisi funzionale, specifica funzionale, FSD, documento di analisi, requisiti funzionali, use case document, scope document. Triggers - analisi funzionale, specifica funzionale, FSD, functional analysis, requisiti, use case, documento Word, .docx, scope document, business requirements, BRD.
 ---
 
-# Functional Analysis Doc — Man-Agent
+# Functional Analysis Doc — TeamFit
 
 Skill operativa per produrre un **documento Word** di analisi funzionale coerente
-con il contesto Man-Agent. Il documento deve essere generato per essere consegnato
+con il contesto TeamFit. Il documento deve essere generato per essere consegnato
 a stakeholder business (PM, sponsor, manager) e tecnici.
 
 ## Output
 
 - **Cartella**: `docs/analisi-funzionale/`
 - **Nome file**: `AF_<argomento>_<YYYY-MM-DD>.docx`
-  - esempio: `AF_ManAgent_MVP_2026-06-20.docx`, `AF_AlertingEngine_2026-06-20.docx`
+  - esempio: `AF_TeamFit_MVP_2026-06-20.docx`, `AF_AlertingEngine_2026-06-20.docx`
 - **Lingua**: italiano.
 
 ## Tooling
@@ -85,7 +85,7 @@ mai riordinare.
 - Heading 3: `Calibri` 11 pt, grassetto.
 - Tabelle: stile `Light Grid Accent 1`.
 - Numerazione automatica delle sezioni (1, 1.1, 1.1.1).
-- Header documento: "Man-Agent — Analisi Funzionale".
+- Header documento: "TeamFit — Analisi Funzionale".
 - Footer: nome file + numero pagina.
 
 ## Diagrammi
@@ -108,10 +108,10 @@ from docx import Document
 from docx.shared import Pt, RGBColor, Cm
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
-PROJECT = "Man-Agent"
+PROJECT = "TeamFit"
 TITLE = "Piattaforma di gestione e ottimizzazione progetti"
 VERSION = "0.1"
-AUTHOR = "Team Man-Agent"
+AUTHOR = "TeamFit Team"
 
 doc = Document()
 
@@ -156,7 +156,7 @@ table(["Versione", "Data", "Autore", "Modifiche"],
 
 # --- TODO: aggiungere sezioni 1..14 secondo la struttura standard della skill ---
 
-doc.save(f"docs/analisi-funzionale/AF_ManAgent_MVP_{date.today():%Y-%m-%d}.docx")
+doc.save(f"docs/analisi-funzionale/AF_TeamFit_MVP_{date.today():%Y-%m-%d}.docx")
 print("OK")
 ```
 

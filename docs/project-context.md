@@ -1,10 +1,10 @@
-# Project Context — Man-Agent
+# Project Context — TeamFit
 
 > Documento vivo. **Aggiornare dopo ogni feature o cambio user-visible.**
 
 ## 1. Scope
 
-**Man-Agent** è una piattaforma SaaS rivendibile alle aziende per la **gestione e
+**TeamFit** è una piattaforma SaaS rivendibile alle aziende per la **gestione e
 ottimizzazione dei progetti** erogati ai loro clienti. Il focus è **l'efficienza
 economica**: ogni progetto deve restare in **write-up** (margine positivo) ed
 evitare il **write-off** (margine negativo o budget sforato).
@@ -18,7 +18,7 @@ Aziende di servizi (es. consulenza tech) con:
 
 ### Problema risolto
 Project Manager e Manager scoprono troppo tardi quando un progetto sta bruciando
-budget. Man-Agent dà visibilità in tempo reale su consumo, forecast e margine, e
+budget. TeamFit dà visibilità in tempo reale su consumo, forecast e margine, e
 alza alert prima che il danno sia fatto.
 
 ## 2. Glossario
@@ -102,7 +102,7 @@ Recapito: **solo in-app** (badge in header + pagina `/alerts`).
 12. **Persistenza**: EF Core + Azure SQL (LocalDB / SQL Express in dev), migrations + seed.
 13. **UI library**: Ant Design + CSS Modules. **No Tailwind**, **no CSS inline**.
 14. **Recharts** per i grafici dashboard.
-15. **IaC**: Terraform per Static Web App + App Service + Azure SQL + Storage Account. Nelle 5h solo `terraform validate` + `plan`, **no apply**.
+15. **IaC**: Terraform POC in `infra/terraform/` per Static Web App Free di default, App Service B1 Linux, Azure SQL Basic fallback, Cosmos DB serverless, Storage LRS, Key Vault, VNet Integration, Private Endpoint, Private DNS, Log Analytics, Application Insights e Azure AI Services/Azure OpenAI pubblico. Linked backend `/api/*` è opzionale e richiede Static Web App Standard. Per la topologia Enterprise aggiunge Application Gateway WAF_v2, VM Agent, servizi privati e Azure AI Foundry privato/internal-only. Nelle 5h solo `terraform validate` + `plan`, **no apply**.
 16. **Seed**: 3 clienti, 8 progetti (mix stati, almeno 2 con alert), 15 dipendenti, 5 utenti (uno per ruolo + un secondo PM).
 17. **Lingua UI**: italiano.
 
@@ -162,8 +162,13 @@ Non implementare senza richiesta esplicita:
 | 2026-06-20 | Light/dark theme tramite `useThemeStore` (Zustand) + `antd darkAlgorithm` | Requisito enterprise; switch nella header; preferenza persistita in localStorage. |
 | 2026-06-20 | KPI calcolati in `src/mocks/data.ts#calcKpi` lato client | Simulazione realistica del calcolo backend; stessa formula che userà Application layer. |
 | 2026-06-20 | Soglia "no attività" fissa a 14 giorni | Configurabilità rimandata post-MVP. |
-| 2026-06-20 | **Setup Wizard** aggiunto (5 step): org name, figure professionali, risorse manuali, importazione Excel, sync DevOps (opzionale). | Onboarding guidato; l'app richiede completamento wizard prima di accedere. |
-| 2026-06-20 | **AI Chatbot** (right panel) alimentato da mock Azure AI Foundry. Propone riallocazioni, analizza carichi, identifica rischi. | PoC per integrazione Azure AI Foundry Agents. |
-| 2026-06-20 | Dashboard refactored: rimossi grafici (AreaChart, PieChart), aggiunta sezione "Carico risorse" con highlight overloaded employees. | Riduzione rumore visivo; focus su insight operativi immediati. |
-| 2026-06-20 | `calcEmployeeWorkload()` aggiunto in `mocks/data.ts`. Soglie: critical ≥650h, warning ≥450h. | KPI workload necessario per la sezione overload in dashboard e chatbot. |
-
+| 2026-06-20 | Prodotto consolidato come TeamFit | Allineamento naming repository/prodotto. |
+| 2026-06-20 | Stima costi infra aggiornata con margine networking | Private Endpoint, Private DNS, Public IP e traffico incidono sul costo mensile. |
+| 2026-06-20 | POC impostato su SKU minimi compatibili con networking privato | B1 è il tier low-cost compatibile con VNet Integration; i data service restano privati via Private Endpoint e Private DNS. |
+| 2026-06-20 | Stima implementazione Terraform Enterprise ridotta al 60% | La stima ora usa AGIC Figura F e assume riuso di moduli Terraform standard. |
+| 2026-06-20 | Azure AI Foundry aggiunto | Endpoint privato in POC ed Enterprise per riflettere i requisiti networking dei diagrammi Draw.io correnti. |
+| 2026-06-20 | Terraform POC creato con Static Web App Free default e linked backend opzionale Standard | Azure richiede Static Web App Standard per il linked backend; Free resta default low-cost con CORS diretto verso App Service pubblico. |
+| 2026-06-20 | Gestione secret Key Vault disabilitata di default nel Terraform POC | Il vault è privato; scrivere secret da runner locale fallirebbe senza accesso VNet/private DNS. |
+| 2026-06-20 | Documento Word infrastrutturale generato | Creato `docs/analisi-funzionale/INFRA_TeamFit_2026-06-20.docx` in italiano con diagrammi PoC/Enterprise esportati da Draw.io, pricing e tempi Enterprise. |
+| 2026-06-20 | Resource group Terraform POC fissato a `rg-verde` | Nome richiesto per allineamento ambiente demo. |
+| 2026-06-20 | Terraform POC allineato allo state remoto di pipeline | Backend Azure Storage: `rg-verde` / `tfstateverde` / `tfstate` / `teamfit-poc.tfstate`. |

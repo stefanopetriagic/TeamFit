@@ -1,4 +1,4 @@
-# Domain Model — Man-Agent
+# Domain Model — TeamFit
 
 > Documento vivo. Aggiornare ogni volta che cambia un aggregate, un invariante o una relazione.
 

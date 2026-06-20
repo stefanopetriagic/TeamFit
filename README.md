@@ -1,4 +1,4 @@
-# Man-Agent
+# TeamFit
 
 Piattaforma SaaS enterprise per la gestione e ottimizzazione di progetti per cliente,
 con focus su efficienza economica (write-up vs write-off) e alerting proattivo.
@@ -10,7 +10,7 @@ con focus su efficienza economica (write-up vs write-off) e alerting proattivo.
 - **Backend**: .NET 10, C#, DDD (Domain / Application / Infrastructure / Api), EF Core, minimal API
 - **Frontend**: React 18 + TypeScript + Vite, Ant Design, CSS Modules, TanStack Query, Zustand, Axios, Recharts
 - **Database**: Azure SQL (LocalDB / SQL Express in dev)
-- **Infra**: Azure Static Web App + App Service Linux + Azure SQL + Storage Account, via Terraform
+- **Infra**: POC low-cost networked con Static Web App Free + App Service B1 Linux + Azure SQL Free/Basic + Storage Account + Private Endpoint + Azure OpenAI via Azure AI Foundry privato; Enterprise con App Gateway WAF_v2, App Service privati, VM Agent, Cosmos DB, Key Vault, Azure OpenAI via Azure AI Foundry privato, Private Endpoint, Private DNS, Log Analytics e Application Insights, via Terraform
 - **Auth**: mock (dropdown utente + header `X-User-Id`)
 
 ## Documentazione
@@ -30,7 +30,7 @@ Skill per VS Code Copilot:
 ## Layout
 
 ```
-Man-Agent/
+TeamFit/
 ├── AGENTS.md
 ├── README.md
 ├── docs/
@@ -54,8 +54,8 @@ Man-Agent/
 ```pwsh
 cd src/backend
 dotnet restore
-dotnet ef database update --project ManAgent.Infrastructure --startup-project ManAgent.Api
-dotnet run --project ManAgent.Api
+dotnet ef database update --project TeamFit.Infrastructure --startup-project TeamFit.Api
+dotnet run --project TeamFit.Api
 # Swagger: https://localhost:5001/swagger
 ```
 
@@ -65,6 +65,15 @@ cd src/frontend
 npm install
 npm run dev
 # Dev server: http://localhost:5173 (proxy /api -> backend)
+```
+
+### Terraform POC
+```pwsh
+cd infra/terraform
+terraform init
+terraform fmt -recursive
+terraform validate
+terraform plan -out=plan.out
 ```
 
 ### Login demo

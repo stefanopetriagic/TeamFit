@@ -1,4 +1,4 @@
-# Guidelines — Man-Agent
+# Guidelines — TeamFit
 
 > Documento vivo. Aggiungere qui ogni nuova convenzione decisa durante il build.
 
@@ -38,7 +38,7 @@
 - Swagger configurato con security header `X-User-Id` editabile.
 
 ### Test
-- `xUnit`. Project di test: `ManAgent.Domain.Tests` (almeno). Opzionale `ManAgent.Application.Tests`.
+- `xUnit`. Project di test: `TeamFit.Domain.Tests` (almeno). Opzionale `TeamFit.Application.Tests`.
 - `FluentAssertions` per leggibilità.
 - Test naming: `Metodo_QuandoCondizione_AlloraRisultato`.
 
@@ -59,7 +59,7 @@
 ### Stili
 - **CSS Modules** (`Componente.module.css`). Import: `import styles from './X.module.css'`.
 - **Mai** `style={{...}}` inline (eccezione tollerata: dimensioni veramente dinamiche calcolate a runtime).
-- Variabili colori in `styles/global.css` come CSS custom properties (`--man-color-warning`, ecc.).
+- Variabili colori in `styles/global.css` come CSS custom properties (`--tf-color-warning`, ecc.).
 - Tema Ant Design centralizzato in `styles/theme.ts`.
 
 ### State
@@ -121,3 +121,19 @@ Se durante l'implementazione introduci una convenzione nuova (es. pattern di err
 handling, naming aggiuntivo, libreria nuova) → **aggiungi una sezione qui** nello
 stesso commit della feature. La regola d'oro è: chi legge questo file deve poter
 scrivere codice conforme senza chiedere a nessuno.
+
+## 9. Stime infrastrutturali
+
+- Le stime Terraform in `docs/infra-design.md` indicano sempre figura professionale usata, baseline e assunzioni.
+- Per stime enterprise usare **AGIC Figura F** se non indicato diversamente.
+- Separare sempre `validate/plan` da `apply/debug/smoke test`.
+- Il Terraform POC in `infra/terraform/` deve restare plan-safe: niente segreti hard-coded, password generate da provider `random`, secret Key Vault non gestiti di default e output sensibili marcati `sensitive`.
+- Static Web App Free non supporta linked backend: mantenere CORS diretto come default; abilitare il linked backend solo con SKU Standard.
+- Non gestire secret Key Vault dal runner locale quando il vault è privato. Usare `manage_key_vault_secrets = false` come default; abilitare solo da runner con accesso alla VNet/private DNS.
+- Non condividere `plan.out`: può contenere valori sensibili se si abilita gestione secret o si passa `api_app_settings`.
+
+## 10. Servizi AI Azure
+
+- Azure OpenAI deve essere gestito tramite Azure AI Foundry.
+- POC: endpoint pubblico ammesso per contenere costo e complessità; accesso solo dal backend via managed identity/RBAC. Enterprise: public network access disabilitato, Private Endpoint + Private DNS obbligatori.
+- I costi Azure OpenAI sono sempre indicati separatamente dal costo infrastrutturale fisso perché dipendono da modello e token.

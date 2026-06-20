@@ -1,10 +1,10 @@
-# Architecture — Man-Agent
+# Architecture — TeamFit
 
 > Documento vivo. Aggiornare quando cambiano bounded context, layer o topologia di deploy.
 
 ## 1. Vista d'insieme
 
-Man-Agent è una SPA React che consuma una API .NET 10 (minimal API) basata su
+TeamFit è una SPA React che consuma una API .NET 10 (minimal API) basata su
 DDD a 4 layer, persistenza Azure SQL via EF Core. Single-tenant. Auth mock.
 
 ```mermaid
@@ -21,10 +21,10 @@ In dev locale: Vite (`:5173`) → proxy → Kestrel (`:5000`) → LocalDB / SQL 
 
 ```mermaid
 flowchart TD
-  Api[ManAgent.Api<br/>Minimal API + Swagger + DI]
-  Infra[ManAgent.Infrastructure<br/>EF Core + DbContext + Repositories + Seed]
-  App[ManAgent.Application<br/>Use cases + DTO + Validators + AlertEvaluator + IClock]
-  Domain[ManAgent.Domain<br/>Aggregate + Entity + VO + Domain Exceptions]
+  Api[TeamFit.Api<br/>Minimal API + Swagger + DI]
+  Infra[TeamFit.Infrastructure<br/>EF Core + DbContext + Repositories + Seed]
+  App[TeamFit.Application<br/>Use cases + DTO + Validators + AlertEvaluator + IClock]
+  Domain[TeamFit.Domain<br/>Aggregate + Entity + VO + Domain Exceptions]
 
   Api --> Infra
   Infra --> App
@@ -99,8 +99,8 @@ Due topologie documentate in **[docs/infra-design.md](infra-design.md)**:
 
 | Topologia | Quando usarla |
 |---|---|
-| **POC** | Validazione rapida, costi ~€115–140/mese. App Service semi-privato (public inbound + VNet Integration outbound). Frontend su Static Web App. |
-| **Enterprise** | Produzione hardened, costi ~€575–620/mese. Tutto privato dietro Application Gateway WAF_v2. Nessun backend esposto direttamente. |
+| **POC** | Validazione rapida, costi ~€50–80/mese + consumo Azure OpenAI. App Service pubblico in ingresso, data service e Azure AI Foundry privati via VNet Integration + Private Endpoint. Frontend su Static Web App Free di default; linked backend `/api/*` opzionale richiede Static Web App Standard. |
+| **Enterprise** | Produzione hardened, costi ~€705–800/mese + consumo Azure OpenAI. Tutto privato dietro Application Gateway WAF_v2; Azure OpenAI via Azure AI Foundry privato. Nessun backend esposto direttamente. |
 
 ### POC — schema sintetico
 
@@ -110,26 +110,28 @@ flowchart TB
     User[Browser]
   end
 
-  subgraph RG[rg-manAgent-poc]
-    SWA[Static Web App\nStandard tier]
-    Plan[App Service Plan S1 Linux]
+  subgraph RG[rg-verde]
+    SWA[Static Web App\nFree tier]
+    Plan[App Service Plan B1 Linux]
     API[App Service .NET 10\npublic inbound]
     VNet[VNet 10.0.0.0/16]
     SQL[(Azure SQL\nprivate endpoint)]
     Cosmos[(Cosmos DB\nprivate endpoint)]
     ST[(Storage Account\nprivate endpoint)]
     KV[(Key Vault\nprivate endpoint)]
+    AOAI[Azure AI Foundry\nprivate endpoint\ninternal only]
     LAW[Log Analytics]
     APPI[Application Insights]
   end
 
   User -->|HTTPS| SWA
-  SWA -->|linked backend /api/*| API
+  SWA -->|CORS diretto; linked backend opzionale su Standard| API
   API -->|VNet Integration outbound| VNet
   VNet --> SQL
   VNet --> Cosmos
   VNet --> ST
   VNet --> KV
+  API -->|internal AI calls via VNet| AOAI
   API --> APPI --> LAW
 ```
 
@@ -141,7 +143,7 @@ flowchart TB
     User[Browser]
   end
 
-  subgraph RG[rg-manAgent-enterprise]
+  subgraph RG[rg-teamfit-enterprise]
     AGW[App Gateway WAF_v2\npublic IP]
     FE[Frontend App Service P1v3\nnginx + React build\nprivate endpoint]
     BE[Backend App Service P1v3\n.NET 10 API\nprivate endpoint]
@@ -151,6 +153,7 @@ flowchart TB
     Cosmos[(Cosmos DB\nprivate endpoint)]
     ST[(Storage Account\nprivate endpoint)]
     KV[(Key Vault\nprivate endpoint)]
+    AOAI[Azure OpenAI via Azure AI Foundry\nprivate endpoint\ninternal only]
     LAW[Log Analytics]
     APPI[Application Insights]
   end
@@ -166,6 +169,7 @@ flowchart TB
   VNet --> Cosmos
   VNet --> ST
   VNet --> KV
+  BE -->|internal AI calls via VNet| AOAI
   FE --> APPI
   BE --> APPI
   APPI --> LAW
@@ -189,6 +193,7 @@ Per dettagli completi (subnet, NSG, DNS zone, costi, note tecniche) vedere
 | Zustand | 4.x |
 | Recharts | 2.x |
 | Terraform | ≥ 1.7 |
-| azurerm provider | ≥ 3.100 |
+| azurerm provider | ≥ 4.30 |
+| azapi provider | ≥ 2.0 |
 
-Le versioni esatte vengono congelate nei file `csproj`, `package.json`, `versions.tf` durante la Fase 2.
+Le versioni esatte vengono congelate nei file `csproj`, `package.json`, `versions.tf` durante la Fase 2. Il Terraform POC vive in `infra/terraform/`.

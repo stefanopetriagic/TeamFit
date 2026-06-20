@@ -1,18 +1,18 @@
 ---
 name: project-presentation-ppt
-description: Genera una presentazione PowerPoint (.pptx) per il progetto Man-Agent o per pitch/demo/stato avanzamento. USE WHEN viene chiesto di creare una presentazione, pitch deck, slide di kickoff, slide demo, slide di stato avanzamento progetto, executive summary visivo. Triggers - presentazione, slide, PowerPoint, .pptx, pitch deck, kickoff, demo deck, executive summary, stato avanzamento, SAL, project review, pitch.
+description: Genera una presentazione PowerPoint (.pptx) per il progetto TeamFit o per pitch/demo/stato avanzamento. USE WHEN viene chiesto di creare una presentazione, pitch deck, slide di kickoff, slide demo, slide di stato avanzamento progetto, executive summary visivo. Triggers - presentazione, slide, PowerPoint, .pptx, pitch deck, kickoff, demo deck, executive summary, stato avanzamento, SAL, project review, pitch.
 ---
 
-# Project Presentation PPT — Man-Agent
+# Project Presentation PPT — TeamFit
 
 Skill operativa per produrre una **presentazione PowerPoint** del progetto
-Man-Agent (pitch commerciale, demo MVP, kickoff, SAL).
+TeamFit (pitch commerciale, demo MVP, kickoff, SAL).
 
 ## Output
 
 - **Cartella**: `docs/presentazioni/`
 - **Nome file**: `PPT_<tipo>_<argomento>_<YYYY-MM-DD>.pptx`
-  - esempi: `PPT_PITCH_ManAgent_2026-06-20.pptx`, `PPT_DEMO_MVP_2026-06-20.pptx`, `PPT_SAL_W26_2026-06-20.pptx`
+  - esempi: `PPT_PITCH_TeamFit_2026-06-20.pptx`, `PPT_DEMO_MVP_2026-06-20.pptx`, `PPT_SAL_W26_2026-06-20.pptx`
 - **Lingua**: italiano.
 - **Aspect ratio**: 16:9.
 
@@ -44,7 +44,7 @@ per nessuno dei tipi (demo deck = max 10).
 
 1. Copertina
 2. Il problema (perché i progetti vanno in write-off)
-3. La soluzione (Man-Agent in 1 frase + payoff)
+3. La soluzione (TeamFit in 1 frase + payoff)
 4. Come funziona (diagramma alto livello)
 5. Funzionalità chiave (4-6 bullet con icone)
 6. Ruoli supportati (Admin / Manager / Presales / PM)
@@ -93,7 +93,7 @@ per nessuno dei tipi (demo deck = max 10).
 - **Massimo 6 bullet per slide**. Una idea per slide.
 - **Niente wall of text**: se serve testo > 50 parole, dividi in 2 slide.
 - **Diagrammi**: esporta i Mermaid in PNG (`mmdc -i x.mmd -o x.png`) e salvali in `docs/presentazioni/img/`.
-- **Footer**: "Man-Agent · v0.1 · <data>" + numero pagina.
+- **Footer**: "TeamFit · v0.1 · <data>" + numero pagina.
 
 ## Template Python di partenza
 
@@ -155,7 +155,7 @@ bg.fill.solid(); bg.fill.fore_color.rgb = DARK
 bg.line.fill.background()
 tb = cover.shapes.add_textbox(Inches(1), Inches(2.5), Inches(11), Inches(3))
 tf = tb.text_frame
-tf.text = "Man-Agent"
+tf.text = "TeamFit"
 tf.paragraphs[0].runs[0].font.size = Pt(60)
 tf.paragraphs[0].runs[0].font.bold = True
 tf.paragraphs[0].runs[0].font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
@@ -177,7 +177,7 @@ add_bullets(s, [
 
 # --- TODO: aggiungere le altre slide secondo l'ordine del deck scelto ---
 
-prs.save(f"docs/presentazioni/PPT_PITCH_ManAgent_{date.today():%Y-%m-%d}.pptx")
+prs.save(f"docs/presentazioni/PPT_PITCH_TeamFit_{date.today():%Y-%m-%d}.pptx")
 print("OK")
 ```
 

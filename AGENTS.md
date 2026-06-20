@@ -1,11 +1,11 @@
-# AGENTS.md — Man-Agent
+# AGENTS.md — TeamFit
 
 Guida operativa per agenti AI (e umani) che lavorano su questo repository.
 Leggere **prima** di qualunque modifica.
 
 ---
 
-## Cos'è Man-Agent
+## Cos'è TeamFit
 
 Piattaforma SaaS enterprise per la **gestione e ottimizzazione dei progetti** che
 un'azienda eroga ai propri clienti. Focus: **efficienza economica** (write-up vs
@@ -14,7 +14,7 @@ write-off) e **alerting proattivo** sui rischi di inefficienza.
 - **Backend**: .NET 10, C#, architettura DDD (Domain / Application / Infrastructure / Api)
 - **Frontend**: React + TypeScript + Vite, Ant Design + CSS Modules (**mai CSS inline**)
 - **DB**: Azure SQL (LocalDB / SQL Express in dev) via EF Core
-- **Infra**: Azure Static Web App + App Service Linux + Azure SQL + Storage Account
+- **Infra**: POC low-cost networked con Static Web App Free + App Service B1 Linux + Azure SQL Free/Basic + Storage Account + Private Endpoint + Azure OpenAI via Azure AI Foundry privato; Enterprise con App Gateway WAF_v2, App Service privati, VM Agent, Cosmos DB, Key Vault, Azure OpenAI via Azure AI Foundry privato, Private Endpoint, Private DNS, Log Analytics e Application Insights
 - **IaC**: Terraform (in `infra/terraform/`)
 - **Auth**: mock (dropdown utenti + header `X-User-Id`), no Entra ID nell'MVP
 - **Tenancy**: single-tenant
@@ -80,7 +80,7 @@ Se modifichi entrambi nello stesso task, applica entrambe le skill ai rispettivi
 ## Layout repository
 
 ```
-Man-Agent/
+TeamFit/
 ├── AGENTS.md                          ← questo file
 ├── README.md
 ├── .github/
@@ -96,32 +96,22 @@ Man-Agent/
 │   ├── domain-model.md
 │   ├── analisi-funzionale/         ← output .docx (creata al primo uso)
 │   └── presentazioni/              ← output .pptx (creata al primo uso)
-├── src/
-│   ├── backend/
-│   │   ├── ManAgent.sln
-│   │   ├── ManAgent.Domain/               ← entity, aggregate, VO, eventi, no deps esterne
-│   │   ├── ManAgent.Application/          ← use case, DTO, interfacce, AlertEvaluator
-│   │   ├── ManAgent.Infrastructure/       ← EF Core DbContext, repository, seed
-│   │   └── ManAgent.Api/                  ← minimal API, middleware, Swagger
-│   └── frontend/
-│       └── src/
-│           ├── pages/                     ← una pagina per route
-│           │   ├── SetupWizardPage.tsx    ← wizard configurazione (5 step)
-│           │   └── ...altre pagine...
-│           ├── components/                ← componenti riutilizzabili
-│           │   ├── AIChatbot.tsx          ← chatbot AI (mock Azure AI Foundry)
-│           │   └── ...altri componenti...
-│           ├── features/                  ← componenti feature-specific
-│           ├── services/api/              ← axios + endpoint
-│           ├── hooks/                     ← custom hooks (TanStack Query wrappers)
-│           ├── store/                     ← Zustand stores
-│           │   ├── authStore.ts
-│           │   ├── themeStore.ts
-│           │   ├── orgConfigStore.ts      ← configurazione organizzazione
-│           │   └── chatStore.ts           ← stato chatbot AI
-│           ├── types/                     ← tipi TS condivisi
-│           │   └── orgConfig.ts           ← OrgConfig, OrgFigure, OrgResource
-│           └── styles/                    ← global.css, theme.ts
+├── backend/
+│   ├── ManAgent.sln
+│   ├── ManAgent.Domain/               ← entity, aggregate, VO, eventi, no deps esterne
+│   ├── ManAgent.Application/          ← use case, DTO, interfacce, AlertEvaluator
+│   ├── ManAgent.Infrastructure/       ← EF Core DbContext, repository, seed
+│   └── ManAgent.Api/                  ← minimal API, middleware, Swagger
+├── frontend/
+│   └── src/
+│       ├── pages/                     ← una pagina per route
+│       ├── components/                ← componenti riutilizzabili
+│       ├── features/                  ← componenti feature-specific
+│       ├── services/api/              ← axios + endpoint
+│       ├── hooks/                     ← custom hooks (TanStack Query wrappers)
+│       ├── store/                     ← Zustand stores
+│       ├── types/                     ← tipi TS condivisi
+│       └── styles/                    ← global.css, theme.ts
 └── infra/
     └── terraform/                     ← main.tf, variables.tf, outputs.tf
 ```
@@ -136,8 +126,8 @@ cd src/backend
 dotnet restore
 dotnet build
 dotnet test
-dotnet ef database update --project ManAgent.Infrastructure --startup-project ManAgent.Api
-dotnet run --project ManAgent.Api
+dotnet ef database update --project TeamFit.Infrastructure --startup-project TeamFit.Api
+dotnet run --project TeamFit.Api
 ```
 
 ### Frontend
