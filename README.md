@@ -35,8 +35,9 @@ Man-Agent/
 ├── README.md
 ├── docs/
 ├── .github/skills/
-├── backend/       (.NET 10 solution, da creare in Fase 2)
-├── frontend/      (Vite + React + TS, da creare in Fase 2)
+├── src/
+│   ├── backend/       (.NET 10 solution, da creare in Fase 2)
+│   └── frontend/      (Vite + React + TS, da creare in Fase 2)
 └── infra/         (Terraform, da creare in Fase 2)
 ```
 
@@ -51,7 +52,7 @@ Man-Agent/
 
 ### Backend
 ```pwsh
-cd backend
+cd src/backend
 dotnet restore
 dotnet ef database update --project ManAgent.Infrastructure --startup-project ManAgent.Api
 dotnet run --project ManAgent.Api
@@ -60,7 +61,7 @@ dotnet run --project ManAgent.Api
 
 ### Frontend
 ```pwsh
-cd frontend
+cd src/frontend
 npm install
 npm run dev
 # Dev server: http://localhost:5173 (proxy /api -> backend)
@@ -74,8 +75,8 @@ per dimostrare lo scope filtrato.
 ## Stato attuale
 
 - [x] **Fase 1** — Foundation docs + skill
-- [ ] **Fase 2** — Scaffolding backend + frontend + Terraform
+- [x] **Fase 2** — Scaffolding backend + frontend + Terraform
 - [ ] **Fase 3** — Dominio + persistenza + seed
 - [ ] **Fase 4** — API + autorizzazione mock
-- [ ] **Fase 5** — Frontend (pagine + componenti)
+- [x] **Fase 5 (frontend)** — Frontend completo con dati mockati (tutte le pagine)
 - [ ] **Fase 6** — Polish + sync docs + IaC finale

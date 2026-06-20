@@ -1,0 +1,134 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  opacity: 0.65;
+}
+
+.breadcrumb span {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.breadcrumb span:hover {
+  opacity: 1;
+}
+
+.headerCard {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.headerBanner {
+  height: 6px;
+}
+
+.headerContent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.projectTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.projectCode {
+  font-size: 12px;
+  font-family: monospace;
+  opacity: 0.6;
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.5;
+  font-weight: 600;
+}
+
+.metaValue {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.allocationRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.employeeName {
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.figureBadge {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.bodyPad {
+  padding: 24px 28px;
+}
+
+.spaceHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.noteText {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.ruleCode {
+  font-size: 11px;
+}
+
+.alertTag {
+  margin-left: 4px;
+}
+
+.clientLink {
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.breadcrumbIcon {
+  font-size: 10px;
+}

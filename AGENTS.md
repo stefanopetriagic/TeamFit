@@ -42,6 +42,10 @@ Vincolo: **MVP da realizzare in ~5 ore**. Dati mockati ma realistici.
 8. **Out-of-scope MVP**: timesheet, pipeline Presales, export Excel/PDF, email
    reali, audit log, multi-tenant, deploy effettivo Azure, auth reale. Non
    aggiungere queste feature senza richiesta esplicita.
+9. **Setup Wizard obbligatorio** al primo accesso: guard `RequireConfig` in `App.tsx`. Non
+   saltare il wizard senza richiesta esplicita.
+10. **AI Chatbot** è un componente mock: tutte le risposte sono deterministiche (keyword matching).
+    Il pattern di integrazione Azure AI Foundry reale va implementato backend-side, non nel mock.
 
 ---
 
@@ -62,8 +66,10 @@ Vincolo: **MVP da realizzare in ~5 ore**. Dati mockati ma realistici.
 
 VS Code Copilot trova automaticamente le skill in `.github/skills/`. Quando lavori in:
 
-- **`backend/`** → segui [`.github/skills/backend-ddd/SKILL.md`](.github/skills/backend-ddd/SKILL.md)
-- **`frontend/`** → segui [`.github/skills/frontend-react/SKILL.md`](.github/skills/frontend-react/SKILL.md)
+- **`src/backend/`** → segui [`.github/skills/backend-ddd/SKILL.md`](.github/skills/backend-ddd/SKILL.md)
+- **`src/frontend/`** → segui [`.github/skills/frontend-react/SKILL.md`](.github/skills/frontend-react/SKILL.md)
+
+> **Stato attuale**: frontend completo con dati mockati (Fase 5 ✅ + PoC wizard + AI chatbot). Backend ancora da scaffoldare (Fase 2–4).
 - **Analisi funzionale (.docx)** → segui [`.github/skills/functional-analysis-doc/SKILL.md`](.github/skills/functional-analysis-doc/SKILL.md)
 - **Presentazione progetto (.pptx)** → segui [`.github/skills/project-presentation-ppt/SKILL.md`](.github/skills/project-presentation-ppt/SKILL.md)
 
@@ -90,22 +96,32 @@ Man-Agent/
 │   ├── domain-model.md
 │   ├── analisi-funzionale/         ← output .docx (creata al primo uso)
 │   └── presentazioni/              ← output .pptx (creata al primo uso)
-├── backend/
-│   ├── ManAgent.sln
-│   ├── ManAgent.Domain/               ← entity, aggregate, VO, eventi, no deps esterne
-│   ├── ManAgent.Application/          ← use case, DTO, interfacce, AlertEvaluator
-│   ├── ManAgent.Infrastructure/       ← EF Core DbContext, repository, seed
-│   └── ManAgent.Api/                  ← minimal API, middleware, Swagger
-├── frontend/
-│   └── src/
-│       ├── pages/                     ← una pagina per route
-│       ├── components/                ← componenti riutilizzabili
-│       ├── features/                  ← componenti feature-specific
-│       ├── services/api/              ← axios + endpoint
-│       ├── hooks/                     ← custom hooks (TanStack Query wrappers)
-│       ├── store/                     ← Zustand stores
-│       ├── types/                     ← tipi TS condivisi
-│       └── styles/                    ← global.css, theme.ts
+├── src/
+│   ├── backend/
+│   │   ├── ManAgent.sln
+│   │   ├── ManAgent.Domain/               ← entity, aggregate, VO, eventi, no deps esterne
+│   │   ├── ManAgent.Application/          ← use case, DTO, interfacce, AlertEvaluator
+│   │   ├── ManAgent.Infrastructure/       ← EF Core DbContext, repository, seed
+│   │   └── ManAgent.Api/                  ← minimal API, middleware, Swagger
+│   └── frontend/
+│       └── src/
+│           ├── pages/                     ← una pagina per route
+│           │   ├── SetupWizardPage.tsx    ← wizard configurazione (5 step)
+│           │   └── ...altre pagine...
+│           ├── components/                ← componenti riutilizzabili
+│           │   ├── AIChatbot.tsx          ← chatbot AI (mock Azure AI Foundry)
+│           │   └── ...altri componenti...
+│           ├── features/                  ← componenti feature-specific
+│           ├── services/api/              ← axios + endpoint
+│           ├── hooks/                     ← custom hooks (TanStack Query wrappers)
+│           ├── store/                     ← Zustand stores
+│           │   ├── authStore.ts
+│           │   ├── themeStore.ts
+│           │   ├── orgConfigStore.ts      ← configurazione organizzazione
+│           │   └── chatStore.ts           ← stato chatbot AI
+│           ├── types/                     ← tipi TS condivisi
+│           │   └── orgConfig.ts           ← OrgConfig, OrgFigure, OrgResource
+│           └── styles/                    ← global.css, theme.ts
 └── infra/
     └── terraform/                     ← main.tf, variables.tf, outputs.tf
 ```
@@ -116,7 +132,7 @@ Man-Agent/
 
 ### Backend
 ```pwsh
-cd backend
+cd src/backend
 dotnet restore
 dotnet build
 dotnet test
@@ -126,7 +142,7 @@ dotnet run --project ManAgent.Api
 
 ### Frontend
 ```pwsh
-cd frontend
+cd src/frontend
 npm install
 npm run dev          # http://localhost:5173, proxy a backend su :5000
 npm run build

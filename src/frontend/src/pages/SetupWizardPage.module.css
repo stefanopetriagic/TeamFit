@@ -1,0 +1,141 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0F1C3F 0%, #1a2d5a 60%, #162247 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.container {
+  width: 100%;
+  max-width: 860px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+.logoMark {
+  width: 48px;
+  height: 48px;
+  background: #1A56E8;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.title {
+  color: #ffffff !important;
+  margin: 0 !important;
+}
+
+.card {
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.steps {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.stepBody {
+  min-height: 360px;
+}
+
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form {
+  max-width: 560px;
+}
+
+.table {
+  margin-top: 8px;
+}
+
+.addRow {
+  margin-top: 12px;
+  align-items: center;
+}
+
+.downloadRow {
+  align-items: center;
+}
+
+.dragger {
+  margin-top: 12px;
+}
+
+.draggerIcon {
+  color: #1A56E8;
+  margin-bottom: 8px;
+}
+
+.uploadPreview {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.optionalHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.syncResult {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.syncSuccess {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #12B76A;
+}
+
+.syncSuccessIcon {
+  font-size: 20px;
+  color: #12B76A;
+}
+
+.syncTables {
+  margin-top: 8px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.footerRight {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.skipBtn {
+  color: #888;
+}

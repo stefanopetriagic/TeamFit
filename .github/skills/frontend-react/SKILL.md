@@ -85,18 +85,53 @@ Mutazioni: `useMutation` + `queryClient.invalidateQueries({ queryKey: projectsQu
 - `<RoleGuard roles={['Admin','Manager']}>` nasconde i children se l'utente corrente
   non ha uno dei ruoli ammessi. Usalo per bottoni "Nuovo progetto", colonne sensibili, ecc.
 - Route protette: `App.tsx` reindirizza a `/login` se `!currentUser`.
+- `RequireConfig` guard: reindirizza a `/configurazione` se `useOrgConfigStore().isConfigured === false`.
+
+## Setup Wizard (`/configurazione`)
+
+- File: `pages/SetupWizardPage.tsx` + `SetupWizardPage.module.css`
+- 5 step con `antd Steps`: Organizzazione, Figure, Risorse, Importazione Excel, Sync DevOps (opzionale)
+- Store: `useOrgConfigStore` (Zustand + persist) in `store/orgConfigStore.ts`
+- Tipo config: `OrgConfig` in `types/orgConfig.ts`
+- Il completamento del wizard chiama `saveConfig(config)` e fa `navigate('/')`.
+
+## AI Chatbot
+
+- File: `components/AIChatbot.tsx` + `AIChatbot.module.css`
+- Store: `useChatStore` (Zustand) in `store/chatStore.ts`
+- Pannello destro 360px collassabile (classe CSS `panel` / `panelOpen`)
+- Toggle via pulsante "AI Agent" nella sidebar, o tramite `useChatStore().toggleOpen()`
+- Mock response engine basato su keyword matching in `getMockResponse()`
+- Proposta riallocazione: componente `ProposalCard` con Accept/Reject inline
+- Label brand: "Man-Agent AI · Azure AI Foundry · GPT-4o"
 
 ## Pagine MVP
 
 | Route | File | Descrizione |
 | --- | --- | --- |
 | `/login` | `pages/LoginPage.tsx` | Dropdown utenti, set store, redirect. |
-| `/` | `pages/DashboardPage.tsx` | KpiCard (write-up/down, # alert), grafico Recharts, top 5 progetti a rischio. |
-| `/progetti` | `pages/ProjectsPage.tsx` | Tabella antd con stato, cliente, budget %, margine, alert; filtri; CTA "Nuovo" (RoleGuard). |
-| `/progetti/:id` | `pages/ProjectDetailPage.tsx` | Tab Anagrafica / Allocazioni (consuntivo inline editabile per PM/Admin/Manager) / Alert. |
-| `/clienti` | `pages/CustomersPage.tsx` | Tabella + CRUD (CRUD solo Admin). |
-| `/dipendenti` | `pages/EmployeesPage.tsx` | Tabella + CRUD (CRUD solo Admin). |
-| `/alerts` | `pages/AlertsPage.tsx` | Lista alert filtrabile per severity. |
+| `/configurazione` | `pages/SetupWizardPage.tsx` | Setup wizard 5 step. Richiesto prima di accedere all'app. |
+| `/` | `pages/DashboardPage.tsx` | Banner overload, KpiCard, sezione carico risorse, progetti a rischio, alert recenti. |
+| `/clienti` | `pages/CustomersPage.tsx` | Tabella clienti con ricerca; CTA "Nuovo" (RoleGuard ADMIN/MANAGER). |
+| `/clienti/:id` | `pages/CustomerDetailPage.tsx` | Header cliente (statistiche, contatti), tabella progetti del cliente. |
+| `/clienti/:customerId/progetti/:id` | `pages/ProjectDetailPage.tsx` | Breadcrumb, KPI row, Tabs Allocazioni/Alert. |
+| `/enterprise` | `pages/EnterprisePage.tsx` | Tabella tutte le risorse con utilizzo, filtri dipartimento/figura; KPI card headcount. |
+| `/enterprise/:id` | `pages/EmployeeProfilePage.tsx` | Profilo singola risorsa: figure, KPI ore, tabella progetti in cui è allocata. |
+| `/profilo` | `pages/ProfilePage.tsx` | Profilo utente loggato: info, KPI, tabella dei propri progetti (PM o allocazione). |
+| `/alerts` | `pages/AlertsPage.tsx` | Lista alert filtrabile per severity/regola. |
+
+## Workload
+
+- `calcEmployeeWorkload()` in `mocks/data.ts` restituisce `EmployeeWorkload[]`
+- `EmployeeWorkload.status`: `'ok' | 'warning' | 'critical'` (soglie: critical ≥650h, warning ≥450h)
+- Usata nella Dashboard per highlight risorse sovraccariche e nel chatbot
+
+## Tema (light / dark)
+
+- `src/store/themeStore.ts` (Zustand, persist): `{ mode: 'light'|'dark', toggle }`.
+- `src/styles/theme.ts`: esporta `lightTheme` e `darkTheme` (`ThemeConfig` di antd).
+- `App.tsx`: applica `antTheme.darkAlgorithm` quando `mode === 'dark'`.
+- Switch `<Sun> / <Moon>` nell'`AppLayout` header — sempre visibile.
 
 ## Stili
 

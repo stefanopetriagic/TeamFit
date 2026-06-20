@@ -1,0 +1,76 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 380px;
+  border-radius: 14px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logoWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--man-color-primary);
+  border-radius: 14px;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 13px;
+  opacity: 0.55;
+}
+
+.footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.4;
+}
+
+.optionRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.optionRole {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.labelWrap {
+  margin-bottom: 12px;
+}
+
+.labelText {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  opacity: 0.55;
+}
+
+.selectFull {
+  width: 100%;
+  margin-bottom: 20px;
+}

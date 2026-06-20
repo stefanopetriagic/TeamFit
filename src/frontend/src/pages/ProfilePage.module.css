@@ -1,0 +1,92 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.headerCard {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.banner {
+  height: 80px;
+  background: linear-gradient(135deg, #0F1C3F 0%, #1A56E8 60%, #0BA5EC 100%);
+  position: relative;
+}
+
+.avatarWrap {
+  position: absolute;
+  bottom: -28px;
+  left: 28px;
+}
+
+.headerBody {
+  padding: 44px 28px 24px;
+}
+
+.userName {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.roleBadge {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.5;
+  font-weight: 600;
+}
+
+.metaValue {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.projectCode {
+  font-size: 11px;
+  font-family: monospace;
+  opacity: 0.6;
+}
+
+.emailText {
+  font-size: 13px;
+}
+
+.marginValue {
+  font-weight: 600;
+}
+
+.projectLink {
+  cursor: pointer;
+}
+
+.headerAvatar {
+  font-size: 22px;
+  font-weight: 700;
+}
