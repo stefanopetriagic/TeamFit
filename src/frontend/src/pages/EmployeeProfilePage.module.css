@@ -1,0 +1,111 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+}
+
+.backLink:hover { opacity: 1; }
+
+.headerCard {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.headerBanner {
+  height: 6px;
+  background: linear-gradient(90deg, #12B76A 0%, #0BA5EC 100%);
+}
+
+.headerContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 24px 28px;
+}
+
+.avatarCircle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.employeeName {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.5;
+  font-weight: 600;
+}
+
+.metaValue {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.projectCode {
+  font-size: 11px;
+  font-family: monospace;
+  opacity: 0.6;
+}
+
+.infoArea {
+  flex: 1;
+}
+
+.figureBold {
+  font-weight: 700;
+}
+
+.emailText {
+  font-size: 13px;
+}
+
+.progressNoMargin {
+  margin-bottom: 0;
+}
+
+.projectLink {
+  cursor: pointer;
+}

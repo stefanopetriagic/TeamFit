@@ -1,0 +1,104 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  opacity: 0.5;
+  margin-top: 2px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.overloadBanner {
+  border-radius: 8px;
+}
+
+.cardTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navLink {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.ruleCode {
+  font-size: 11px;
+}
+
+/* Workload table */
+
+.resourceCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resourceInitial {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.resourceNameRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.resourceRole {
+  font-size: 12px;
+  display: block;
+  margin-top: 1px;
+}
+
+.fireIcon {
+  color: #F04438;
+  font-size: 14px;
+}
+
+.workloadBar {
+  width: 100%;
+  padding-right: 8px;
+}
+
+.projectsList {
+  font-size: 12px;
+}
+
+/* Row highlights */
+
+.rowCritical td {
+  background: rgba(240, 68, 56, 0.05) !important;
+}
+
+.rowWarning td {
+  background: rgba(247, 144, 9, 0.04) !important;
+}
+

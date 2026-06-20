@@ -1,0 +1,80 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  opacity: 0.5;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.employeeName {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.employeeAvatar {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.figureTag {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.allocationBar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filterRow {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.searchInput {
+  width: 280px;
+}
+
+.filterSelect {
+  width: 180px;
+}
+
+.emailText {
+  font-size: 11px;
+}
+
+.hoursText {
+  font-size: 11px;
+}
+
+.navArrow {
+  cursor: pointer;
+}

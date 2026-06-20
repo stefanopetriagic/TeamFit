@@ -106,7 +106,37 @@ Recapito: **solo in-app** (badge in header + pagina `/alerts`).
 16. **Seed**: 3 clienti, 8 progetti (mix stati, almeno 2 con alert), 15 dipendenti, 5 utenti (uno per ruolo + un secondo PM).
 17. **Lingua UI**: italiano.
 
-## 8. Fuori scope MVP
+## 10. Funzionalità PoC aggiunte (2026-06-20)
+
+### Setup Wizard (`/configurazione`)
+- Richiesto al primo accesso (guard `RequireConfig` in `App.tsx`)
+- 5 step: Organizzazione → Figure professionali → Risorse umane → Importazione Excel → Sync DevOps (opzionale)
+- Step Excel: download template CSV + upload con anteprima
+- Step DevOps: mock sync con Azure DevOps (URL + PAT), importa 5 progetti e 4 utenti simulati
+- Store: `useOrgConfigStore` (Zustand + persist), tipo `OrgConfig` in `src/types/orgConfig.ts`
+- Accessibile anche via menu utente "Riconfigura organizzazione"
+
+### AI Chatbot (pannello destro)
+- Toggled dal pulsante "AI Agent" in fondo alla sidebar sinistra
+- Pannello collassabile 360px sulla destra, si apre sopra il contenuto principale
+- Label: **TeamFit AI** | Azure AI Foundry · GPT-4o
+- Mock response engine: riconosce keyword (sovraccarico, proponi, rischio, budget, risorse, portfolio, help)
+- Propone riallocazioni come card interattive con Accept/Reject
+- Non richiede backend; tutte le risposte sono mock deterministici
+
+### Dashboard rinforzata
+- Rimossi grafici AreaChart e PieChart (rumore visivo)
+- Banner rosso se ci sono risorse in sovraccarico critico
+- Sezione "Carico risorse" con Progress bar colorata per stato (ok/warning/critical)
+- Righe di tabella colorate per criticità (rosso/giallo)
+- KPI grid mantenuta, semplificate le label
+
+### Workload
+- Funzione `calcEmployeeWorkload()` in `mocks/data.ts`
+- `EmployeeWorkload` type esportato
+- Soglie: `critical ≥ 650h`, `warning ≥ 450h`, `ok < 450h` — ore totali allocate su progetti Attivi
+
+
 
 Non implementare senza richiesta esplicita:
 - Timesheet giornaliero / settimanale
@@ -128,6 +158,9 @@ Non implementare senza richiesta esplicita:
 | 2026-06-20 | Tailwind escluso a favore di Ant Design + CSS Modules | Conflitti reset/utility, overhead non giustificato nelle 5h. |
 | 2026-06-20 | PM può modificare solo `OreConsuntivate` sui suoi progetti | Necessario per generare alert realistici durante la demo. |
 | 2026-06-20 | `PresalesId` nullable su `Project` | Serve a filtrare la vista Presales senza creare entità separata. |
+| 2026-06-20 | Frontend scaffolded con dati mockati (no backend) | Primo ciclo: UI enterprise completa su mock data; backend sviluppato in seguito. |
+| 2026-06-20 | Light/dark theme tramite `useThemeStore` (Zustand) + `antd darkAlgorithm` | Requisito enterprise; switch nella header; preferenza persistita in localStorage. |
+| 2026-06-20 | KPI calcolati in `src/mocks/data.ts#calcKpi` lato client | Simulazione realistica del calcolo backend; stessa formula che userà Application layer. |
 | 2026-06-20 | Soglia "no attività" fissa a 14 giorni | Configurabilità rimandata post-MVP. |
 | 2026-06-20 | Prodotto consolidato come TeamFit | Allineamento naming repository/prodotto. |
 | 2026-06-20 | Stima costi infra aggiornata con margine networking | Private Endpoint, Private DNS, Public IP e traffico incidono sul costo mensile. |

@@ -1,0 +1,55 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  opacity: 0.5;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.customerCode {
+  font-size: 11px;
+  font-family: monospace;
+  opacity: 0.6;
+}
+
+.customerAvatar {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.projectLink {
+  display: block;
+  cursor: pointer;
+}
+
+.emailText {
+  font-size: 12px;
+}
+
+.projectCount {
+  font-size: 12px;
+}
+
+.searchInput {
+  max-width: 360px;
+  margin-bottom: 16px;
+}

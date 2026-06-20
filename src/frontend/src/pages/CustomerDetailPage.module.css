@@ -1,0 +1,137 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+  margin-bottom: 0;
+}
+
+.backLink:hover {
+  opacity: 1;
+}
+
+.headerCard {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.headerBanner {
+  height: 6px;
+  background: linear-gradient(90deg, #1A56E8 0%, #0BA5EC 100%);
+}
+
+.headerContent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.customerAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.customerName {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.customerMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.metaLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.5;
+  font-weight: 600;
+}
+
+.metaValue {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.statsRow {
+  display: flex;
+  gap: 24px;
+}
+
+.statBox {
+  text-align: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  min-width: 80px;
+}
+
+.statNumber {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.statLabel {
+  font-size: 11px;
+  opacity: 0.55;
+  margin-top: 2px;
+}
+
+.projectCode {
+  font-size: 11px;
+  font-family: monospace;
+  opacity: 0.6;
+}
+
+.bodyPad {
+  padding: 24px 28px;
+}
+
+.sectorTag {
+  margin-top: 2px;
+}
+
+.emailText {
+  font-size: 13px;
+}
+
+.headerDivider {
+  margin: 20px 0 16px;
+}
+
+.marginValue {
+  font-weight: 600;
+}
+
+.projectLinkBlock {
+  display: block;
+  cursor: pointer;
+}

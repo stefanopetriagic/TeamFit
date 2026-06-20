@@ -1,4 +1,4 @@
-# Analisi Funzionale — Man-Agent
+# Analisi Funzionale — TeamFit
 
 > Versione: 1.0 — 2026-06-20
 > Stato: Draft MVP
@@ -9,13 +9,13 @@
 
 ### 1.1 Scopo del documento
 
-Questo documento descrive le funzionalità della piattaforma **Man-Agent** dal punto di vista degli utenti finali. È il riferimento per la validazione dei requisiti, la pianificazione dei test di accettazione e l'onboarding di nuovi membri del team.
+Questo documento descrive le funzionalità della piattaforma **TeamFit** dal punto di vista degli utenti finali. È il riferimento per la validazione dei requisiti, la pianificazione dei test di accettazione e l'onboarding di nuovi membri del team.
 
 Per i dettagli tecnici si rimanda a [architecture.md](architecture.md), [domain-model.md](domain-model.md) e [guidelines.md](guidelines.md).
 
 ### 1.2 Obiettivo di prodotto
 
-Man-Agent è una piattaforma SaaS per la **gestione e ottimizzazione economica dei progetti** erogati da aziende di servizi ai propri clienti. Il problema centrale che risolve è: **Project Manager e Manager scoprono troppo tardi quando un progetto sta bruciando budget**. Man-Agent fornisce visibilità in tempo reale su consumo, forecast e margine, e genera alert prima che il danno sia irreversibile.
+TeamFit è una piattaforma SaaS per la **gestione e ottimizzazione economica dei progetti** erogati da aziende di servizi ai propri clienti. Il problema centrale che risolve è: **Project Manager e Manager scoprono troppo tardi quando un progetto sta bruciando budget**. TeamFit fornisce visibilità in tempo reale su consumo, forecast e margine, e genera alert prima che il danno sia irreversibile.
 
 ### 1.3 Ambito MVP
 

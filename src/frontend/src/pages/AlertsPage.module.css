@@ -1,0 +1,56 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  opacity: 0.5;
+  margin-top: 2px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.filterRow {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.selSeverity {
+  width: 160px;
+}
+
+.selRule {
+  width: 220px;
+}
+
+.countText {
+  font-size: 12px;
+}
+
+.ruleTag {
+  font-size: 11px;
+}
+
+.projectLink {
+  cursor: pointer;
+  font-weight: 600;
+}
