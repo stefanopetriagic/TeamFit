@@ -35,26 +35,26 @@ resource "azurerm_key_vault" "main" {
   tags                          = local.tags
 }
 
-resource "azurerm_mssql_server" "sql" {
-  name                          = local.sql_server_name
-  location                      = data.azurerm_resource_group.main.location
-  resource_group_name           = data.azurerm_resource_group.main.name
-  version                       = "12.0"
-  administrator_login           = var.sql_admin_login
-  administrator_login_password  = local.sql_admin_password
-  minimum_tls_version           = "1.2"
-  public_network_access_enabled = false
-  tags                          = local.tags
-}
+# resource "azurerm_mssql_server" "sql" {
+#   name                          = local.sql_server_name
+#   location                      = data.azurerm_resource_group.main.location
+#   resource_group_name           = data.azurerm_resource_group.main.name
+#   version                       = "12.0"
+#   administrator_login           = var.sql_admin_login
+#   administrator_login_password  = local.sql_admin_password
+#   minimum_tls_version           = "1.2"
+#   public_network_access_enabled = false
+#   tags                          = local.tags
+# }
 
-resource "azurerm_mssql_database" "app" {
-  name                 = local.sql_database_name
-  server_id            = azurerm_mssql_server.sql.id
-  sku_name             = var.sql_database_sku_name
-  max_size_gb          = var.sql_database_max_size_gb
-  storage_account_type = "Local"
-  tags                 = local.tags
-}
+# resource "azurerm_mssql_database" "app" {
+#   name                 = local.sql_database_name
+#   server_id            = azurerm_mssql_server.sql.id
+#   sku_name             = var.sql_database_sku_name
+#   max_size_gb          = var.sql_database_max_size_gb
+#   storage_account_type = "Local"
+#   tags                 = local.tags
+# }
 
 locals {
   sql_connection_string = "Server=tcp:${azurerm_mssql_server.sql.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_mssql_database.app.name};Persist Security Info=False;User ID=${azurerm_mssql_server.sql.administrator_login};Password=${local.sql_admin_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
