@@ -49,10 +49,10 @@ output "storage_blob_endpoint" {
   value       = azurerm_storage_account.main.primary_blob_endpoint
 }
 
-output "cosmos_endpoint" {
-  description = "Cosmos DB endpoint, resolved privately from the VNet."
-  value       = azurerm_cosmosdb_account.main.endpoint
-}
+# output "cosmos_endpoint" {
+#   description = "Cosmos DB endpoint, resolved privately from the VNet."
+#   value       = azurerm_cosmosdb_account.main.endpoint
+# }
 
 output "ai_services_endpoint" {
   description = "Azure AI Services / Azure OpenAI public endpoint."

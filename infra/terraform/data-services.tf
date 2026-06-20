@@ -83,34 +83,34 @@ resource "azurerm_storage_account_network_rules" "main" {
   bypass             = ["AzureServices"]
 }
 
-resource "azurerm_cosmosdb_account" "main" {
-  name                          = local.cosmos_account_name
-  location                      = data.azurerm_resource_group.main.location
-  resource_group_name           = data.azurerm_resource_group.main.name
-  offer_type                    = "Standard"
-  kind                          = "GlobalDocumentDB"
-  public_network_access_enabled = false
-  tags                          = local.tags
+# resource "azurerm_cosmosdb_account" "main" {
+#   name                          = local.cosmos_account_name
+#   location                      = data.azurerm_resource_group.main.location
+#   resource_group_name           = data.azurerm_resource_group.main.name
+#   offer_type                    = "Standard"
+#   kind                          = "GlobalDocumentDB"
+#   public_network_access_enabled = false
+#   tags                          = local.tags
 
-  capabilities {
-    name = "EnableServerless"
-  }
+#   capabilities {
+#     name = "EnableServerless"
+#   }
 
-  consistency_policy {
-    consistency_level = var.cosmos_consistency_level
-  }
+#   consistency_policy {
+#     consistency_level = var.cosmos_consistency_level
+#   }
 
-  geo_location {
-    location          = data.azurerm_resource_group.main.location
-    failover_priority = 0
-  }
-}
+#   geo_location {
+#     location          = data.azurerm_resource_group.main.location
+#     failover_priority = 0
+#   }
+# }
 
-resource "azurerm_cosmosdb_sql_database" "ai_agent" {
-  name                = "ai-agent"
-  resource_group_name = data.azurerm_resource_group.main.name
-  account_name        = azurerm_cosmosdb_account.main.name
-}
+# resource "azurerm_cosmosdb_sql_database" "ai_agent" {
+#   name                = "ai-agent"
+#   resource_group_name = data.azurerm_resource_group.main.name
+#   account_name        = azurerm_cosmosdb_account.main.name
+# }
 
 resource "azurerm_cognitive_account" "ai" {
   name                          = local.ai_account_name
