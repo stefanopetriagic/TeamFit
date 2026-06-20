@@ -127,3 +127,13 @@ scrivere codice conforme senza chiedere a nessuno.
 - Le stime Terraform in `docs/infra-design.md` indicano sempre figura professionale usata, baseline e assunzioni.
 - Per stime enterprise usare **AGIC Figura F** se non indicato diversamente.
 - Separare sempre `validate/plan` da `apply/debug/smoke test`.
+- Il Terraform POC in `infra/terraform/` deve restare plan-safe: niente segreti hard-coded, password generate da provider `random`, secret Key Vault non gestiti di default e output sensibili marcati `sensitive`.
+- Static Web App Free non supporta linked backend: mantenere CORS diretto come default; abilitare il linked backend solo con SKU Standard.
+- Non gestire secret Key Vault dal runner locale quando il vault è privato. Usare `manage_key_vault_secrets = false` come default; abilitare solo da runner con accesso alla VNet/private DNS.
+- Non condividere `plan.out`: può contenere valori sensibili se si abilita gestione secret o si passa `api_app_settings`.
+
+## 10. Servizi AI Azure
+
+- Azure OpenAI deve essere gestito tramite Azure AI Foundry.
+- POC: endpoint pubblico ammesso per contenere costo e complessità; accesso solo dal backend via managed identity/RBAC. Enterprise: public network access disabilitato, Private Endpoint + Private DNS obbligatori.
+- I costi Azure OpenAI sono sempre indicati separatamente dal costo infrastrutturale fisso perché dipendono da modello e token.

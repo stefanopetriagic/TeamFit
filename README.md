@@ -10,7 +10,7 @@ con focus su efficienza economica (write-up vs write-off) e alerting proattivo.
 - **Backend**: .NET 10, C#, DDD (Domain / Application / Infrastructure / Api), EF Core, minimal API
 - **Frontend**: React 18 + TypeScript + Vite, Ant Design, CSS Modules, TanStack Query, Zustand, Axios, Recharts
 - **Database**: Azure SQL (LocalDB / SQL Express in dev)
-- **Infra**: POC low-cost networked con Static Web App Free + App Service B1 Linux + Azure SQL Free/Basic + Storage Account + Private Endpoint; Enterprise con App Gateway WAF_v2, App Service privati, VM Agent, Cosmos DB, Key Vault, Private Endpoint, Private DNS, Log Analytics e Application Insights, via Terraform
+- **Infra**: POC low-cost networked con Static Web App Free + App Service B1 Linux + Azure SQL Free/Basic + Storage Account + Private Endpoint + Azure OpenAI via Azure AI Foundry privato; Enterprise con App Gateway WAF_v2, App Service privati, VM Agent, Cosmos DB, Key Vault, Azure OpenAI via Azure AI Foundry privato, Private Endpoint, Private DNS, Log Analytics e Application Insights, via Terraform
 - **Auth**: mock (dropdown utente + header `X-User-Id`)
 
 ## Documentazione
@@ -37,7 +37,7 @@ TeamFit/
 ├── .github/skills/
 ├── backend/       (.NET 10 solution, da creare in Fase 2)
 ├── frontend/      (Vite + React + TS, da creare in Fase 2)
-└── infra/         (Terraform, da creare in Fase 2)
+└── infra/         (Terraform POC in infra/terraform)
 ```
 
 ## Prerequisiti
@@ -66,6 +66,15 @@ npm run dev
 # Dev server: http://localhost:5173 (proxy /api -> backend)
 ```
 
+### Terraform POC
+```pwsh
+cd infra/terraform
+terraform init
+terraform fmt -recursive
+terraform validate
+terraform plan -out=plan.out
+```
+
 ### Login demo
 Apri http://localhost:5173/login e seleziona un utente dal dropdown. Ogni utente ha
 un ruolo diverso (Admin, Manager, Presales, Project Manager 1, Project Manager 2)
@@ -74,7 +83,7 @@ per dimostrare lo scope filtrato.
 ## Stato attuale
 
 - [x] **Fase 1** — Foundation docs + skill
-- [ ] **Fase 2** — Scaffolding backend + frontend + Terraform
+- [ ] **Fase 2** — Scaffolding backend + frontend + Terraform POC
 - [ ] **Fase 3** — Dominio + persistenza + seed
 - [ ] **Fase 4** — API + autorizzazione mock
 - [ ] **Fase 5** — Frontend (pagine + componenti)

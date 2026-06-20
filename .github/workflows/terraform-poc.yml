@@ -1,0 +1,242 @@
+name: Terraform POC
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "infra/terraform/**"
+      - ".github/workflows/terraform-poc.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "infra/terraform/**"
+      - ".github/workflows/terraform-poc.yml"
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Terraform action to run"
+        required: true
+        default: "plan"
+        type: choice
+        options: [plan, apply, destroy]
+
+# Prevent concurrent infra mutations; queue rather than cancel an in-flight apply.
+concurrency:
+  group: terraform-poc-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pull-requests: write  # needed to post plan comment
+
+# ---------------------------------------------------------------------------
+# ARM credentials for both Azure CLI (bootstrap) and Terraform (azurerm)
+# ---------------------------------------------------------------------------
+# Required GitHub Secrets:
+#   ARM_CLIENT_ID       f11a1b61-52b2-45a7-8bf9-109194d255e4
+#   ARM_TENANT_ID       d5e193bb-0b46-467d-9d95-03eb0d012c42
+#   ARM_CLIENT_SECRET   <service-principal secret>
+#   ARM_SUBSCRIPTION_ID aa9de1ef-b9ca-4053-88a0-7f11d2a197fa
+# ---------------------------------------------------------------------------
+env:
+  ARM_CLIENT_ID:       ${{ secrets.ARM_CLIENT_ID }}
+  ARM_CLIENT_SECRET:   ${{ secrets.ARM_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID:       ${{ secrets.ARM_TENANT_ID }}
+
+  # Passed to Terraform as var.subscription_id and var.resource_group_name
+  TF_VAR_subscription_id:     ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  TF_VAR_resource_group_name: rg-verde
+
+  # Remote-state backend (created idempotently in bootstrap step)
+  BACKEND_RG:        rg-verde
+  BACKEND_SA:        tfstateverde          # must be globally unique; rename if taken
+  BACKEND_CONTAINER: tfstate
+  BACKEND_KEY:       teamfit-poc.tfstate
+
+  TF_DIR: infra/terraform
+
+jobs:
+  # -------------------------------------------------------------------------
+  # 1. Bootstrap — ensure the remote-state storage account exists
+  #    az commands are idempotent; safe to run on every trigger.
+  # -------------------------------------------------------------------------
+  bootstrap:
+    name: Bootstrap remote state
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: >-
+            {
+              "clientId":       "${{ secrets.ARM_CLIENT_ID }}",
+              "clientSecret":   "${{ secrets.ARM_CLIENT_SECRET }}",
+              "subscriptionId": "${{ secrets.ARM_SUBSCRIPTION_ID }}",
+              "tenantId":       "${{ secrets.ARM_TENANT_ID }}"
+            }
+
+      - name: Create backend resource group
+        run: |
+          az group create \
+            --name "$BACKEND_RG" \
+            --location westeurope \
+            --output none
+
+      - name: Create backend storage account
+        run: |
+          az storage account create \
+            --name "$BACKEND_SA" \
+            --resource-group "$BACKEND_RG" \
+            --location westeurope \
+            --sku Standard_LRS \
+            --kind StorageV2 \
+            --min-tls-version TLS1_2 \
+            --allow-blob-public-access false \
+            --output none
+
+      - name: Create tfstate container
+        run: |
+          az storage container create \
+            --name "$BACKEND_CONTAINER" \
+            --account-name "$BACKEND_SA" \
+            --auth-mode login \
+            --output none
+
+  # -------------------------------------------------------------------------
+  # 2. Plan — runs on pull_request or workflow_dispatch action=plan
+  # -------------------------------------------------------------------------
+  plan:
+    name: Terraform Plan
+    needs: bootstrap
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'plan')
+    defaults:
+      run:
+        working-directory: ${{ env.TF_DIR }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~1.7"
+
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="resource_group_name=$BACKEND_RG" \
+            -backend-config="storage_account_name=$BACKEND_SA" \
+            -backend-config="container_name=$BACKEND_CONTAINER" \
+            -backend-config="key=$BACKEND_KEY"
+
+      - name: Terraform Format check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          set +e
+          terraform plan -no-color -detailed-exitcode -out=tfplan 2>&1 | tee /tmp/plan.txt
+          echo "exitcode=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          set -e
+          # exitcode 0 = no changes, 1 = error, 2 = changes pending
+          exit_code=${PIPESTATUS[0]}
+          if [ "$exit_code" -eq 1 ]; then exit 1; fi
+
+      - name: Post plan to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs   = require('fs');
+            const plan = fs.readFileSync('/tmp/plan.txt', 'utf8');
+            const max  = 65000;
+            const body = plan.length > max
+              ? plan.slice(0, max) + '\n\n...[output truncated]'
+              : plan;
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner:        context.repo.owner,
+              repo:         context.repo.repo,
+              body: `## Terraform Plan\n\`\`\`terraform\n${body}\n\`\`\`\n\n` +
+                    `Plan exit code: \`${{ steps.plan.outputs.exitcode }}\`` +
+                    ` (0 = no changes, 2 = changes pending)`,
+            });
+
+  # -------------------------------------------------------------------------
+  # 3. Apply — runs on push to main or workflow_dispatch action=apply
+  #    Protected by the "poc" GitHub Environment (add manual approval there).
+  # -------------------------------------------------------------------------
+  apply:
+    name: Terraform Apply
+    needs: bootstrap
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply')
+    environment: poc
+    defaults:
+      run:
+        working-directory: ${{ env.TF_DIR }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~1.7"
+
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="resource_group_name=$BACKEND_RG" \
+            -backend-config="storage_account_name=$BACKEND_SA" \
+            -backend-config="container_name=$BACKEND_CONTAINER" \
+            -backend-config="key=$BACKEND_KEY"
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -no-color
+
+      - name: Output summary
+        run: terraform output -no-color >> "$GITHUB_STEP_SUMMARY"
+
+  # -------------------------------------------------------------------------
+  # 4. Destroy — manual only via workflow_dispatch action=destroy
+  #    Protected by the "poc-destroy" GitHub Environment for extra safety.
+  # -------------------------------------------------------------------------
+  destroy:
+    name: Terraform Destroy
+    needs: bootstrap
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'
+    environment: poc-destroy
+    defaults:
+      run:
+        working-directory: ${{ env.TF_DIR }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~1.7"
+
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="resource_group_name=$BACKEND_RG" \
+            -backend-config="storage_account_name=$BACKEND_SA" \
+            -backend-config="container_name=$BACKEND_CONTAINER" \
+            -backend-config="key=$BACKEND_KEY"
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve -no-color

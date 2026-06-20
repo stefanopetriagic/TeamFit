@@ -24,10 +24,21 @@ yarn-error.log*
 
 # ---------- Terraform ----------
 .terraform/
+.terraformrc
+terraform.rc
 *.tfstate
 *.tfstate.*
 *.tfplan
+*.tfbackend
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+plan.out
 crash.log
+crash.*.log
 
 # ---------- OS / IDE ----------
 .DS_Store

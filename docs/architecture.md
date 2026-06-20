@@ -99,8 +99,8 @@ Due topologie documentate in **[docs/infra-design.md](infra-design.md)**:
 
 | Topologia | Quando usarla |
 |---|---|
-| **POC** | Validazione rapida, costi ~€45–75/mese. App Service pubblico in ingresso, data service privati via VNet Integration + Private Endpoint. Frontend su Static Web App Free. |
-| **Enterprise** | Produzione hardened, costi ~€700–790/mese inclusi margini networking. Tutto privato dietro Application Gateway WAF_v2. Nessun backend esposto direttamente. |
+| **POC** | Validazione rapida, costi ~€50–80/mese + consumo Azure OpenAI. App Service pubblico in ingresso, data service e Azure AI Foundry privati via VNet Integration + Private Endpoint. Frontend su Static Web App Free di default; linked backend `/api/*` opzionale richiede Static Web App Standard. |
+| **Enterprise** | Produzione hardened, costi ~€705–800/mese + consumo Azure OpenAI. Tutto privato dietro Application Gateway WAF_v2; Azure OpenAI via Azure AI Foundry privato. Nessun backend esposto direttamente. |
 
 ### POC — schema sintetico
 
@@ -110,7 +110,7 @@ flowchart TB
     User[Browser]
   end
 
-  subgraph RG[rg-teamfit-poc]
+  subgraph RG[rg-verde]
     SWA[Static Web App\nFree tier]
     Plan[App Service Plan B1 Linux]
     API[App Service .NET 10\npublic inbound]
@@ -119,17 +119,19 @@ flowchart TB
     Cosmos[(Cosmos DB\nprivate endpoint)]
     ST[(Storage Account\nprivate endpoint)]
     KV[(Key Vault\nprivate endpoint)]
+    AOAI[Azure AI Foundry\nprivate endpoint\ninternal only]
     LAW[Log Analytics]
     APPI[Application Insights]
   end
 
   User -->|HTTPS| SWA
-  SWA -->|linked backend /api/*| API
+  SWA -->|CORS diretto; linked backend opzionale su Standard| API
   API -->|VNet Integration outbound| VNet
   VNet --> SQL
   VNet --> Cosmos
   VNet --> ST
   VNet --> KV
+  API -->|internal AI calls via VNet| AOAI
   API --> APPI --> LAW
 ```
 
@@ -151,6 +153,7 @@ flowchart TB
     Cosmos[(Cosmos DB\nprivate endpoint)]
     ST[(Storage Account\nprivate endpoint)]
     KV[(Key Vault\nprivate endpoint)]
+    AOAI[Azure OpenAI via Azure AI Foundry\nprivate endpoint\ninternal only]
     LAW[Log Analytics]
     APPI[Application Insights]
   end
@@ -166,6 +169,7 @@ flowchart TB
   VNet --> Cosmos
   VNet --> ST
   VNet --> KV
+  BE -->|internal AI calls via VNet| AOAI
   FE --> APPI
   BE --> APPI
   APPI --> LAW
@@ -189,6 +193,7 @@ Per dettagli completi (subnet, NSG, DNS zone, costi, note tecniche) vedere
 | Zustand | 4.x |
 | Recharts | 2.x |
 | Terraform | ≥ 1.7 |
-| azurerm provider | ≥ 3.100 |
+| azurerm provider | ≥ 4.30 |
+| azapi provider | ≥ 2.0 |
 
-Le versioni esatte vengono congelate nei file `csproj`, `package.json`, `versions.tf` durante la Fase 2.
+Le versioni esatte vengono congelate nei file `csproj`, `package.json`, `versions.tf` durante la Fase 2. Il Terraform POC vive in `infra/terraform/`.

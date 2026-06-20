@@ -14,7 +14,7 @@ write-off) e **alerting proattivo** sui rischi di inefficienza.
 - **Backend**: .NET 10, C#, architettura DDD (Domain / Application / Infrastructure / Api)
 - **Frontend**: React + TypeScript + Vite, Ant Design + CSS Modules (**mai CSS inline**)
 - **DB**: Azure SQL (LocalDB / SQL Express in dev) via EF Core
-- **Infra**: POC low-cost networked con Static Web App Free + App Service B1 Linux + Azure SQL Free/Basic + Storage Account + Private Endpoint; Enterprise con App Gateway WAF_v2, App Service privati, VM Agent, Cosmos DB, Key Vault, Private Endpoint, Private DNS, Log Analytics e Application Insights
+- **Infra**: POC low-cost networked con Static Web App Free + App Service B1 Linux + Azure SQL Free/Basic + Storage Account + Private Endpoint + Azure OpenAI via Azure AI Foundry privato; Enterprise con App Gateway WAF_v2, App Service privati, VM Agent, Cosmos DB, Key Vault, Azure OpenAI via Azure AI Foundry privato, Private Endpoint, Private DNS, Log Analytics e Application Insights
 - **IaC**: Terraform (in `infra/terraform/`)
 - **Auth**: mock (dropdown utenti + header `X-User-Id`), no Entra ID nell'MVP
 - **Tenancy**: single-tenant
