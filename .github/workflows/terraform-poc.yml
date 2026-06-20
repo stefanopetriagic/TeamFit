@@ -57,6 +57,7 @@ jobs:
       - name: Azure login
         uses: azure/login@v2
         with:
+          auth-type:       SERVICE_PRINCIPAL
           client-id:       ${{ secrets.ARM_CLIENT_ID }}
           client-secret:   ${{ secrets.ARM_CLIENT_SECRET }}
           tenant-id:       ${{ secrets.ARM_TENANT_ID }}
