@@ -238,6 +238,25 @@
   color: #12B76A;
 }
 
+.proposalHours {
+  background: rgba(26, 86, 232, 0.08);
+  color: #1A56E8;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.proposalMotivation {
+  font-size: 11px;
+  color: var(--ant-color-text-secondary, #666);
+  background: var(--ant-color-fill-quaternary, #fafafa);
+  border-radius: 6px;
+  padding: 6px 8px;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
 .proposalActions {
   display: flex;
   gap: 6px;
@@ -272,4 +291,32 @@
 
 .sendBtn:disabled {
   color: #ccc !important;
+}
+
+/* ─── Quick action chips ─────────────────────────────────────────────────── */
+
+.quickChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0 8px;
+}
+
+.quickChip {
+  background: var(--ant-color-bg-container, #fff);
+  border: 1px solid var(--ant-color-border, #d0d5dd);
+  border-radius: 16px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--ant-color-text, #333);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.quickChip:hover {
+  background: #1A56E8;
+  border-color: #1A56E8;
+  color: #fff;
 }
