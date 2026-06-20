@@ -29,15 +29,15 @@ output "static_web_app_backend_link_enabled" {
   value       = var.enable_static_web_app_backend_link
 }
 
-output "sql_server_fqdn" {
-  description = "Azure SQL Server FQDN, resolved privately from the VNet."
-  value       = azurerm_mssql_server.sql.fully_qualified_domain_name
-}
+# output "sql_server_fqdn" {
+#   description = "Azure SQL Server FQDN, resolved privately from the VNet."
+#   value       = azurerm_mssql_server.sql.fully_qualified_domain_name
+# }
 
-output "sql_database_name" {
-  description = "Azure SQL Database name."
-  value       = azurerm_mssql_database.app.name
-}
+# output "sql_database_name" {
+#   description = "Azure SQL Database name."
+#   value       = azurerm_mssql_database.app.name
+# }
 
 output "key_vault_uri" {
   description = "Key Vault URI."
