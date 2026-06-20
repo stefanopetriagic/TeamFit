@@ -95,31 +95,84 @@ gli alert (sono ricalcolati on-demand).
 
 ## 6. Deploy target Azure (predisposto, no apply nell'MVP)
 
+Due topologie documentate in **[docs/infra-design.md](infra-design.md)**:
+
+| Topologia | Quando usarla |
+|---|---|
+| **POC** | Validazione rapida, costi ~€115–140/mese. App Service semi-privato (public inbound + VNet Integration outbound). Frontend su Static Web App. |
+| **Enterprise** | Produzione hardened, costi ~€575–620/mese. Tutto privato dietro Application Gateway WAF_v2. Nessun backend esposto direttamente. |
+
+### POC — schema sintetico
+
 ```mermaid
 flowchart TB
-  subgraph RG[Resource Group rg-manAgent-dev]
-    SWA[Static Web App<br/>Standard tier]
-    Plan[App Service Plan Linux<br/>B1]
-    API[App Service<br/>.NET 10]
-    SQL[Azure SQL Server]
-    DB[(SQL Database<br/>Basic / Serverless)]
-    ST[Storage Account<br/>Standard LRS]
+  subgraph Internet
+    User[Browser]
   end
 
-  SWA -. linked backend .-> API
-  API --> DB
-  Plan --- API
-  SQL --- DB
+  subgraph RG[rg-manAgent-poc]
+    SWA[Static Web App\nStandard tier]
+    Plan[App Service Plan S1 Linux]
+    API[App Service .NET 10\npublic inbound]
+    VNet[VNet 10.0.0.0/16]
+    SQL[(Azure SQL\nprivate endpoint)]
+    Cosmos[(Cosmos DB\nprivate endpoint)]
+    ST[(Storage Account\nprivate endpoint)]
+    KV[(Key Vault\nprivate endpoint)]
+    LAW[Log Analytics]
+    APPI[Application Insights]
+  end
+
+  User -->|HTTPS| SWA
+  SWA -->|linked backend /api/*| API
+  API -->|VNet Integration outbound| VNet
+  VNet --> SQL
+  VNet --> Cosmos
+  VNet --> ST
+  VNet --> KV
+  API --> APPI --> LAW
 ```
 
-Risorse Terraform:
-- `azurerm_resource_group`
-- `azurerm_static_web_app`
-- `azurerm_service_plan` + `azurerm_linux_web_app`
-- `azurerm_mssql_server` + `azurerm_mssql_database`
-- `azurerm_storage_account`
+### Enterprise — schema sintetico
 
-Output: hostname SWA, hostname Web App, connection string SQL (sensitive).
+```mermaid
+flowchart TB
+  subgraph Internet
+    User[Browser]
+  end
+
+  subgraph RG[rg-manAgent-enterprise]
+    AGW[App Gateway WAF_v2\npublic IP]
+    FE[Frontend App Service P1v3\nnginx + React build\nprivate endpoint]
+    BE[Backend App Service P1v3\n.NET 10 API\nprivate endpoint]
+    VM[VM Agent Standard_B2s\nCI/CD self-hosted]
+    VNet[VNet 10.0.0.0/16]
+    SQL[(Azure SQL\nprivate endpoint)]
+    Cosmos[(Cosmos DB\nprivate endpoint)]
+    ST[(Storage Account\nprivate endpoint)]
+    KV[(Key Vault\nprivate endpoint)]
+    LAW[Log Analytics]
+    APPI[Application Insights]
+  end
+
+  User -->|HTTPS| AGW
+  AGW -->|private endpoint| FE
+  FE -->|VNet /api/* proxy| BE
+  FE -->|VNet Integration| VNet
+  BE -->|VNet Integration| VNet
+  VM -->|SCM private endpoint| FE
+  VM -->|SCM private endpoint| BE
+  VNet --> SQL
+  VNet --> Cosmos
+  VNet --> ST
+  VNet --> KV
+  FE --> APPI
+  BE --> APPI
+  APPI --> LAW
+```
+
+Per dettagli completi (subnet, NSG, DNS zone, costi, note tecniche) vedere
+[docs/infra-design.md](infra-design.md).
 
 ## 7. Versioning componenti
 
